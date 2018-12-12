@@ -1,0 +1,242 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{510BB392-8882-4A8F-BE75-B4C9311A6ED9}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>theHostComputer</RootNamespace>
+    <AssemblyName>theHostComputer</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <PlatformTarget>x86</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="NT158.net, Version=1.0.0.0, Culture=neutral, PublicKeyToken=117d556249dd6e94, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\NT158.net.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZedGraph">
+      <HintPath>..\..\..\..\vb\test\WindowsApplication1\ZedGraph.dll</HintPath>
+    </Reference>
+    <Reference Include="ZedGraph.Web, Version=5.1.5.29221, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ZedGraph.Web.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="biaoding.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="biaoding.Designer.cs">
+      <DependentUpon>biaoding.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CDigitalFilter.cs" />
+    <Compile Include="CFunction.cs" />
+    <Compile Include="CFunction2.cs" />
+    <Compile Include="C_Code.cs" />
+    <Compile Include="C_Pubdef.cs" />
+    <Compile Include="dealing.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="dealing.Designer.cs">
+      <DependentUpon>dealing.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Dog.cs" />
+    <Compile Include="DynamicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicForm.Designer.cs">
+      <DependentUpon>DynamicForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DynamicpicForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DynamicpicForm.Designer.cs">
+      <DependentUpon>DynamicpicForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="EndingForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EndingForm.Designer.cs">
+      <DependentUpon>EndingForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FrequencyForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FrequencyForm.Designer.cs">
+      <DependentUpon>FrequencyForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="power_Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="power_Form.Designer.cs">
+      <DependentUpon>power_Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MainForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MainForm.Designer.cs">
+      <DependentUpon>MainForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="picForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="picForm.Designer.cs">
+      <DependentUpon>picForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpectrumFrom.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SpectrumFrom.Designer.cs">
+      <DependentUpon>SpectrumFrom.cs</DependentUpon>
+    </Compile>
+    <Compile Include="walking.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="walking.Designer.cs">
+      <DependentUpon>walking.cs</DependentUpon>
+    </Compile>
+    <Compile Include="WelcomeForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="WelcomeForm.Designer.cs">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="zed2Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zed2Form.Designer.cs">
+      <DependentUpon>zed2Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="zed3Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="zed3Form.Designer.cs">
+      <DependentUpon>zed3Form.cs</DependentUpon>
+    </Compile>
+    <Compile Include="PointForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PointForm.Designer.cs">
+      <DependentUpon>PointForm.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="biaoding.resx">
+      <DependentUpon>biaoding.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="dealing.resx">
+      <DependentUpon>dealing.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DynamicForm.resx">
+      <DependentUpon>DynamicForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DynamicpicForm.resx">
+      <DependentUpon>DynamicpicForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EndingForm.resx">
+      <DependentUpon>EndingForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FrequencyForm.resx">
+      <DependentUpon>FrequencyForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="power_Form.resx">
+      <DependentUpon>power_Form.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MainForm.resx">
+      <DependentUpon>MainForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="picForm.resx">
+      <DependentUpon>picForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <EmbeddedResource Include="SpectrumFrom.resx">
+      <DependentUpon>SpectrumFrom.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="walking.resx">
+      <DependentUpon>walking.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="WelcomeForm.resx">
+      <DependentUpon>WelcomeForm.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zed2Form.resx">
+      <DependentUpon>zed2Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="zed3Form.resx">
+      <DependentUpon>zed3Form.cs</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PointForm.resx">
+      <DependentUpon>PointForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="ClassDiagram1.cd" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\niat1.jpg" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
