@@ -15,8 +15,7 @@ namespace theHostComputer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //Application.Run(new WelcomeForm());
-            Application.Run(new PointForm());
+            Application.Run(new WelcomeForm());
         }
     }
 }

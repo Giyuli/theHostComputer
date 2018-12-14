@@ -48,6 +48,9 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="TeeChart">
+      <HintPath>C:\Program Files (x86)\Steema Software\Steema TeeChart for .NET 2017 Evaluation 4.1.2017.03147\net40\x86\TeeChart.dll</HintPath>
+    </Reference>
     <Reference Include="ZedGraph">
       <HintPath>..\..\..\..\vb\test\WindowsApplication1\ZedGraph.dll</HintPath>
     </Reference>

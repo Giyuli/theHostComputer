@@ -14,8 +14,6 @@ using System.Net.Sockets;
 using System.Threading;
 using ZedGraph;
 
-
-
 namespace theHostComputer
 {
     public partial class walking : Form
@@ -54,8 +52,6 @@ namespace theHostComputer
         private double F3;
         private double F4;
 
-        /// </summary>
-
         PointPairList list1 = new PointPairList();
         PointPairList list2 = new PointPairList();
         PointPairList list3 = new PointPairList();
@@ -88,20 +84,12 @@ namespace theHostComputer
         private double[] zhangliang_max = new double[9];
         private double[] zhangliang_min = new double[9];
 
-
-
         private double[] Dydata_sigma = new double[9];
         private double[] Dydata_sum = new double[9];
         private double[] Dydata_biaozhunchasum = new double[9];
         private double[] Dydata_mean = new double[9];
         private double[] Dydata_max = new double[9];
         private double[] Dydata_min = new double[9];
-        
-
-
-
-
-        /// </summary>
 
         private long Row = 0;
         private long RRow = 0;
@@ -141,7 +129,6 @@ namespace theHostComputer
         private Point currentPoint = new Point(0, 0);
         private bool pointflag = false;
         private bool readflag = false;
-
 
         ////包覆层管道
         private double tiligaodu = 0;
@@ -670,9 +657,6 @@ namespace theHostComputer
 
         }
 
-
-
-
         private void selectokButton_Click(object sender, EventArgs e)
         {
             chselectokflag = false;
@@ -994,19 +978,6 @@ namespace theHostComputer
 
         }
 
-
-
-
-
-
-
-
-
-
-      
-
-
-
         private void draw_yoriginalline3()
         {
             //获取引用
@@ -1141,23 +1112,6 @@ namespace theHostComputer
 
 
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         //选择显示曲线的通道
         private void Chanelcombo_SelectedIndexChanged(object sender, EventArgs e)
@@ -1717,8 +1671,8 @@ namespace theHostComputer
             return fanghui;
         }
 
-        //////
-        private double[,] Fredapanduan(double[,] y_lvbo, int xzuobiao, int yzuobiao)  //判断Freadata数据 是否小于最小标准
+        //判断Freadata数据 是否小于最小标准
+        private double[,] Fredapanduan(double[,] y_lvbo, int xzuobiao, int yzuobiao)  
         {
             double[,] fanghui = new double[12, 1000000];
             double zuixiaobiaozhun = 2; //判断最小标准
@@ -3446,7 +3400,6 @@ namespace theHostComputer
             Tslabel_2.Text = "请选取第一个点" + "\r\n" + "的x轴坐标";
         }
 
-
         //采数按钮
         private void buttonSend_Click(object sender, EventArgs e)
         {
@@ -3683,7 +3636,6 @@ namespace theHostComputer
         //    }
         //}
 
-
         private void Dynamicpic_2_DoubleClick(object sender, EventArgs e)
         {
             try
@@ -3702,9 +3654,6 @@ namespace theHostComputer
             zed2Form DyForm2 = new zed2Form(zedGraphControl2_2);
             DyForm2.Show();
         }
-
-
-
 
         private void pic_2_Paint(object sender, PaintEventArgs e)
         {
@@ -4718,7 +4667,6 @@ namespace theHostComputer
 
         }
 
-
         //获取单击的点x,y坐标位置
         private double x1 = 0;
         private double x2 = 0;
@@ -4786,7 +4734,6 @@ namespace theHostComputer
 
         Rectangle rec7 = new Rectangle(803, 35, 82, 10);  // diejia7mm chu xian
         Rectangle rec8 = new Rectangle(803, 76, 82, 10);  // diejia7mm fei hu
-
 
         private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
@@ -4886,7 +4833,6 @@ namespace theHostComputer
         private double b_2 = 0;
 
         double[] qxsd2_2 = new double[5];
-
 
         private double distext_2;
 
@@ -5363,16 +5309,5 @@ namespace theHostComputer
         {
 
         }
-
-
-
-
-
-
-
-
-
-
-
     }
 }

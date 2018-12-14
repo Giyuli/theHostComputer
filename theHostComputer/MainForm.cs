@@ -8,12 +8,10 @@ using System.Text;
 using System.Windows.Forms;
 using System.IO;
 using System.IO.Ports;
-
 using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using ZedGraph;
-
 using System.Runtime.InteropServices;
 
 
@@ -303,8 +301,8 @@ namespace theHostComputer
                     thread1 = new Thread(new ThreadStart(ReceiveMessage));
                     thread1.IsBackground = true;
                     thread1.Start();
+                    Thread.Sleep(1);
                 }
-
             }
             else
             {
@@ -315,14 +313,12 @@ namespace theHostComputer
                 {
                     thread1.Abort();
                 }
-
             }
         }
 
         private void startButton_Click(object sender, EventArgs e)
         {
             //  dog.isMyDog();//找狗
-
             //有线//
             IPEndPoint ipep = new IPEndPoint(IPAddress.Parse("192.168.114.12"), 1200);
             //无线//
@@ -403,7 +399,7 @@ namespace theHostComputer
                     thread1.Priority = ThreadPriority.Highest;
                     thread1.IsBackground = true;
                     thread1.Start();
-
+                    Thread.Sleep(1);
                 }
             }
             else
@@ -510,7 +506,6 @@ namespace theHostComputer
                     Display();
                 }
             }
-
         }
 
         string pathtxt;
@@ -681,7 +676,6 @@ namespace theHostComputer
             }
             if (RRow > 4)
             {
-
                 B[0] = (FRealData1[0, 3] - FRealData1[1, 3]);
                 B[1] = (FRealData1[0, 5] - FRealData1[1, 5]);
                 B[2] = (FRealData1[1, 0] - FRealData1[0, 0]);
@@ -691,7 +685,6 @@ namespace theHostComputer
                 B[7] = B[5];
                 B[8] = (FRealData1[1, 1] - FRealData1[0, 1]);
                 B[4] = -(B[0] + B[8]);
-
 
                 for (int i = 0; i < 9; i++)
                 {
@@ -711,7 +704,6 @@ namespace theHostComputer
                     FRealData[7, Row] = zhangliang[7, Row];
                     FRealData[8, Row] = zhangliang[8, Row];
 
-
                     listAdddataRow();
 
                     Dydata[0, Row] = FRealData[0, Row];
@@ -729,14 +721,12 @@ namespace theHostComputer
                     }
                 }
 
-
                 mean1 = (Dydata2[2, Row] + Dydata2[5, Row] + Dydata2[8, Row] + Dydata2[11, Row]) / 4;
 
                 ysdatanew[0, Row] = Dydata2[2, Row] - mean1;
                 ysdatanew[1, Row] = Dydata2[5, Row] - mean1;
                 ysdatanew[2, Row] = Dydata2[8, Row] - mean1;
                 ysdatanew[3, Row] = Dydata2[11, Row] - mean1;
-
 
                 //曲线显示
                 if (chselectokflag)
@@ -1075,6 +1065,8 @@ namespace theHostComputer
             zedGraphControl1.Invalidate();
         }
 
+        int count = 0;
+
         //动态曲线图添加数据
         private void ZedGraph1Adddata()
         {
@@ -1233,8 +1225,22 @@ namespace theHostComputer
                     xScale.Max = displayrow;
                     xScale.Min = xScale.Max - DXMAX;
                 }
-                //每10个点进行一次绘制
-                if (Row % 10 == 0)
+
+                count = count + i;
+
+                XtextBox.Text = count.ToString();
+
+                //每个点进行一次绘制
+                //zedGraphControl1.AxisChange();
+                //zedGraphControl1.Invalidate();
+
+                //每10个点进行一次绘制(当频率达到100及以上时)
+                if (Row % 10 == 0 && RatecomboBox.SelectedIndex > 3)
+                {
+                    zedGraphControl1.AxisChange();
+                    zedGraphControl1.Invalidate();
+                }
+                else
                 {
                     zedGraphControl1.AxisChange();
                     zedGraphControl1.Invalidate();
@@ -4247,7 +4253,6 @@ namespace theHostComputer
             Tslabel.Text = "请选取第一个点" + "\r\n" + "的x轴坐标";
         }
 
-
         //采数按钮
         private void buttonSend_Click(object sender, EventArgs e)
         {
@@ -4325,7 +4330,6 @@ namespace theHostComputer
 
             }
         }
-
 
         private void pic_Paint(object sender, PaintEventArgs e)
         {
@@ -4954,7 +4958,6 @@ namespace theHostComputer
         Rectangle rec7 = new Rectangle(803, 35, 82, 10);  // diejia7mm chu xian
         Rectangle rec8 = new Rectangle(803, 76, 82, 10);  // diejia7mm fei hu
 
-
         private void panel3_MouseDown(object sender, MouseEventArgs e)
         {
             if (rec1.Contains(e.Location))
@@ -5104,11 +5107,6 @@ namespace theHostComputer
             }
         }
 
-
-        /// <summary>
-        /// //////////////////////////////////////////////////////////////标定模块////////////////////////////////////////////////////////////////////////////////////////
-        /// 
-
         //缺陷位置信息
         double[] qxlocation = new double[5];
         double[] qxdian = new double[5];
@@ -5134,7 +5132,6 @@ namespace theHostComputer
         private double b = 0;
 
         double[] qxsd2 = new double[5];
-
 
         private double distext;
 
