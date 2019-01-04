@@ -2804,3 +2804,25 @@ E:\Project\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.zed2For
 E:\Project\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.zed3Form.resources
 E:\Project\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.PointForm.resources
 E:\Project\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.csproj.GenerateResource.Cache
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.exe
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.pdb
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\bin\Debug\theHostComputer.exe
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\bin\Debug\theHostComputer.pdb
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.csprojResolveAssemblyReference.cache
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.biaoding.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.dealing.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.DynamicForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.DynamicpicForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.EndingForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.FrequencyForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.power_Form.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.MainForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.picForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.Properties.Resources.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.SpectrumFrom.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.walking.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.WelcomeForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.zed2Form.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.zed3Form.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.PointForm.resources
+C:\Users\Administrator\Desktop\新建文件夹 (2)\theHostComputer\theHostComputer\obj\x86\Debug\theHostComputer.csproj.GenerateResource.Cache

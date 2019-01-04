@@ -31,7 +31,6 @@ namespace theHostComputer
             // 画图面版X标题
             myPane.XAxis.Title.Text = "频率";
 
-
             myPane.XAxis.Scale.Min = 0;
             //初始化数据(频率)
             PointPairList list1 = new PointPairList();
@@ -41,7 +40,7 @@ namespace theHostComputer
 
             for (int i = 0; i < 24; i++)////这里的数量要和lable的一致，比如横坐标显示了5个lable，这里就要给5个
             {
-                number = random.Next(60, 100);
+                number = random.Next(20, 30);
                 list1.Add(i, number);
             }
 

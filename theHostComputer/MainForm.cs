@@ -46,6 +46,7 @@ namespace theHostComputer
         private double[] R1jul = new double[3];//一号探头的3个距离
         private double[,] distxyz = new double[16, 100000];  //每个探头保存4列数据，即4*4=16列
         private double[,] Dydata2 = new double[12, 100000]; //原始数据保存
+       
 
         private double[,] ysdata = new double[12, 100000]; //读原始数据并保存
         private double[,] ysdata1 = new double[12, 100000]; //读原始数据并保存
@@ -721,6 +722,7 @@ namespace theHostComputer
                     }
                 }
 
+
                 mean1 = (Dydata2[2, Row] + Dydata2[5, Row] + Dydata2[8, Row] + Dydata2[11, Row]) / 4;
 
                 ysdatanew[0, Row] = Dydata2[2, Row] - mean1;
@@ -796,6 +798,10 @@ namespace theHostComputer
             myPane.XAxis.Title.Text = "距离";
             //设置Y轴说明文字
             myPane.YAxis.Title.Text = "磁场变化/nT";
+            myPane.XAxis.MajorGrid.IsVisible = true;//底色画网格
+            myPane.XAxis.MajorGrid.Color = Color.Green;
+            myPane.XAxis.MinorGrid.IsVisible = true;
+            myPane.XAxis.MinorGrid.Color = Color.Green;
 
             myPane.XAxis.Scale.Min = 0;		//X轴最小值0
             myPane.XAxis.Scale.Max = 200;	//X轴最大100
@@ -818,6 +824,10 @@ namespace theHostComputer
             //设置Y轴说明文字
             myPane1.YAxis.Title.Text = "磁场变化/nT";
 
+            myPane1.XAxis.MajorGrid.IsVisible = true;//底色画网格
+            myPane1.XAxis.MajorGrid.Color = Color.Green;
+            myPane1.XAxis.MinorGrid.IsVisible = true;
+            myPane1.XAxis.MinorGrid.Color = Color.Green;
             myPane1.XAxis.Scale.Min = 0;		//X轴最小值0
             myPane1.XAxis.Scale.Max = 200;	//X轴最大100
             myPane1.XAxis.Scale.MinorStep = 1;//X轴小步长1,也就是小间隔
@@ -866,7 +876,11 @@ namespace theHostComputer
             myPane3.XAxis.Scale.Max = 200;	//X轴最大100
             myPane3.XAxis.Scale.MinorStep = 1;//X轴小步长1,也就是小间隔
             myPane3.XAxis.Scale.MajorStep = 5;//X轴大步长为5，也就是显示文字的大间隔
-
+            myPane3.AxisChange();
+            zedGraphControl1.Invalidate();
+            zedGraphControl2.Invalidate();
+            zedGraphControl3.Invalidate();
+            zedGraphControl3_2.Invalidate();
             /////////////////////////////////////////////////////////////////////////////////////////////
 
             //获取引用
@@ -888,6 +902,11 @@ namespace theHostComputer
             myPane4.XAxis.Scale.Max = 200;	//X轴最大100
             myPane4.XAxis.Scale.MinorStep = 1;//X轴小步长1,也就是小间隔
             myPane4.XAxis.Scale.MajorStep = 5;//X轴大步长为5，也就是显示文字的大间隔  
+            myPane4.AxisChange();
+            zedGraphControl1.Invalidate();
+            zedGraphControl2.Invalidate();
+            zedGraphControl3.Invalidate();
+            zedGraphControl3_2.Invalidate();
 
             /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -911,7 +930,12 @@ namespace theHostComputer
             myPane5.XAxis.Scale.Min = 0;		//X轴最小值0
             myPane5.XAxis.Scale.Max = 200;	//X轴最大100
             myPane5.XAxis.Scale.MinorStep = 1;//X轴小步长1,也就是小间隔
-            myPane5.XAxis.Scale.MajorStep = 5;//X轴大步长为5，也就是显示文字的大间隔  
+            myPane5.XAxis.Scale.MajorStep = 5;//X轴大步长为5，也就是显示文字的大间隔 
+            myPane5.AxisChange();
+            zedGraphControl1.Invalidate();
+            zedGraphControl2.Invalidate();
+            zedGraphControl3.Invalidate();
+            zedGraphControl3_2.Invalidate();
 
             /////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -1593,8 +1617,7 @@ namespace theHostComputer
                 Fun.Function(final_imagination, 8, original_num - 1, ThickOftube);          //2016.4.14改
                 cidao_1 = Fun.col_lip_1();        //计算等值线数据 
 
-                draw_yoriginalline();   //画原始曲线  
-
+                draw_yoriginalline();   //画原始曲线
                 picContour();                 //画等值线图
                 pointflag = false;   //置取点标志   
                 runflag = true;
@@ -1629,8 +1652,8 @@ namespace theHostComputer
             //绘图留黑，有问题
             myPane1.XAxis.Scale.Min = 0;		//X轴最小值0
             myPane1.XAxis.Scale.Max = lenofpiece;	//X轴最大值   
-            //myPane1.XAxis.Scale.MinorStep = 3;
-            //myPane1.XAxis.Scale.MajorStep = 15;
+            myPane1.XAxis.Scale.MinorStep = 50;
+            myPane1.XAxis.Scale.MajorStep = 100;
 
             PointPairList mylist0 = new ZedGraph.PointPairList();
             ZedGraph.LineItem myCurve0;
@@ -1717,11 +1740,32 @@ namespace theHostComputer
                 {
                     //加减原始数据的差距使在一个位置
                     x = (float)i * lenofpiece / (original_num - 1);
-                    nlist0.Add(x, original_signal[0, i] - 4244);
-                    nlist1.Add(x, -original_signal[3, i] - 1396);
+                    nlist0.Add(x, original_signal[0, i] );
+                    nlist1.Add(x, original_signal[3, i]);
                     nlist2.Add(x, -original_signal[6, i]);
-                    nlist3.Add(x, original_signal[9, i] + 13004);
+                    nlist3.Add(x, -original_signal[9, i]);
                 }
+                CHname = string.Format("{0}", 1);
+                myCurve0 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 2);
+                myCurve1 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist1, Color.Red, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 3);
+                myCurve2 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 4);
+                myCurve3 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
+            }
+            else if(Channel.SelectedIndex == 1) 
+            {
+                for (int i = 0; i < original_num; i++)
+                {
+                    x = (float)i * lenofpiece / (original_num - 1);
+                    nlist0.Add(x, -original_signal[1, i]);
+                    nlist1.Add(x, -original_signal[4, i]);
+                    nlist2.Add(x, original_signal[7, i]);
+                    nlist3.Add(x, original_signal[10, i]-4600);
+
+                }
+
                 CHname = string.Format("{0}", 1);
                 myCurve0 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
                 CHname = string.Format("{0}", 2);
@@ -1736,12 +1780,10 @@ namespace theHostComputer
                 for (int i = 0; i < original_num; i++)
                 {
                     x = (float)i * lenofpiece / (original_num - 1);
-                    nlist0.Add(x, original_signal[4, i] - 1745);
-                    nlist1.Add(x, original_signal[5, i] - 24017);
-                    nlist2.Add(x, original_signal[1, i] + 500);
-                    nlist3.Add(x, original_signal[7, i] - 4837);
-                    nlist4.Add(x, original_signal[11, i] - 34146);
-                    nlist5.Add(x, original_signal[10, i]);
+                    nlist0.Add(x, original_signal[2, i]);
+                    nlist1.Add(x, original_signal[5, i]);
+                    nlist2.Add(x, original_signal[8, i]);
+                    nlist3.Add(x, original_signal[11, i]);
 
                 }
 
@@ -1753,11 +1795,9 @@ namespace theHostComputer
                 myCurve2 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
                 CHname = string.Format("{0}", 4);
                 myCurve3 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 5);
-                myCurve4 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist4, Color.Yellow, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 6);
-                myCurve5 = zedGraphControl3.GraphPane.AddCurve(CHname, nlist5, Color.LightBlue, ZedGraph.SymbolType.None);
             }
+
+
             myPane2.AxisChange();
             zedGraphControl3.Invalidate();
         }
@@ -1960,132 +2000,16 @@ namespace theHostComputer
                 CHname = string.Format("{0}", 12);
                 myCurve3 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist11, Color.Black, ZedGraph.SymbolType.None);
             }
-            if (comboBox2.SelectedIndex == 13)
+             if (comboBox2.SelectedIndex == 13)
             {
                 for (int i = 0; i < original_num - 1; i++)
                 {
 
                     x = (float)i * lenofpiece / (original_num - 1);
-                    nlist0.Add(x, original_signal_chafen2[4, i]);
-                    nlist1.Add(x, original_signal_chafen2[5, i]);
-                    nlist2.Add(x, original_signal_chafen2[1, i]);
-                    nlist3.Add(x, original_signal_chafen2[7, i]);
-                    nlist4.Add(x, original_signal_chafen2[11, i]);
-                    nlist5.Add(x, original_signal_chafen2[10, i]);
-
-                    nlist6.Add(x, original_signal_chafen2_max[4]);
-                    nlist7.Add(x, original_signal_chafen2_max[5]);
-                    nlist8.Add(x, original_signal_chafen2_max[1]);
-                    nlist9.Add(x, original_signal_chafen2_max[7]);
-                    nlist10.Add(x, original_signal_chafen2_max[11]);
-                    nlist11.Add(x, original_signal_chafen2_max[10]);
-                    nlist12.Add(x, original_signal_chafen2_min[4]);
-                    nlist13.Add(x, original_signal_chafen2_min[5]);
-                    nlist14.Add(x, original_signal_chafen2_min[1]);
-                    nlist15.Add(x, original_signal_chafen2_min[7]);
-                    nlist16.Add(x, original_signal_chafen2_min[11]);
-                    nlist17.Add(x, original_signal_chafen2_min[10]);
-                }
-                CHname = string.Format("{0}", 1);
-                myCurve0 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 2);
-                myCurve1 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist1, Color.Red, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 3);
-                myCurve2 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 4);
-                myCurve3 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 5);
-                myCurve4 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist4, Color.Green, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 6);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist5, Color.Orange, ZedGraph.SymbolType.None);
-
-                CHname = string.Format("{0}", 7);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist6, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 8);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist7, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 9);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist8, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 10);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist9, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 11);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist10, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 12);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist11, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 13);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist12, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 14);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist13, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 15);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist14, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 16);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist15, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 17);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist16, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 18);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist17, Color.Black, ZedGraph.SymbolType.None);
-            }
-            if (comboBox2.SelectedIndex == 14)
-            {
-                for (int i = 0; i < original_num - 1; i++)
-                {
-
-                    x = (float)i * lenofpiece / (original_num - 1);
-                    nlist0.Add(x, Math.Abs(original_signal_chafen2[2, i]));
-                    nlist1.Add(x, Math.Abs(original_signal_chafen2[5, i]));
-                    nlist2.Add(x, Math.Abs(original_signal_chafen2[8, i]));
-                    nlist3.Add(x, Math.Abs(original_signal_chafen2[11, i]));
-
-
-                    nlist4.Add(x, original_signal_chafen2_max[2]);
-                    nlist5.Add(x, original_signal_chafen2_max[5]);
-                    nlist6.Add(x, original_signal_chafen2_max[8]);
-                    nlist7.Add(x, original_signal_chafen2_max[11]);
-
-                    nlist8.Add(x, original_signal_chafen2_min[2]);
-                    nlist9.Add(x, original_signal_chafen2_min[5]);
-                    nlist10.Add(x, original_signal_chafen2_min[8]);
-                    nlist11.Add(x, original_signal_chafen2_min[11]);
-
-
-
-                }
-                CHname = string.Format("{0}", 1);
-                myCurve0 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 2);
-                myCurve1 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist1, Color.Red, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 3);
-                myCurve2 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 4);
-                myCurve3 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
-
-
-                CHname = string.Format("{0}", 7);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist4, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 8);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist5, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 9);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist6, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 10);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist7, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 11);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist8, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 12);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist9, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 13);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist10, Color.Black, ZedGraph.SymbolType.None);
-                CHname = string.Format("{0}", 14);
-                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist11, Color.Black, ZedGraph.SymbolType.None);
-            }
-            if (comboBox2.SelectedIndex != 12 && comboBox2.SelectedIndex != 13)
-            {
-                for (int i = 0; i < original_num - 1; i++)
-                {
-                    //加减原始数据的差距使在一个位置
-                    x = (float)i * lenofpiece / (original_num - 1);
-                    nlist0.Add(x, Math.Abs(original_signal_chafen2[1, i]));
-                    nlist1.Add(x, Math.Abs(original_signal_chafen2[4, i]));
-                    nlist2.Add(x, Math.Abs(original_signal_chafen2[7, i]));
-                    nlist3.Add(x, Math.Abs(original_signal_chafen2[10, i]));
+                    nlist0.Add(x, original_signal_chafen2[1, i]);
+                    nlist1.Add(x, original_signal_chafen2[4, i]);
+                    nlist2.Add(x, original_signal_chafen2[7, i]);
+                    nlist3.Add(x, original_signal_chafen2[10, i]);
 
                     nlist4.Add(x, original_signal_chafen2_max[1]);
                     nlist5.Add(x, original_signal_chafen2_max[4]);
@@ -2095,6 +2019,92 @@ namespace theHostComputer
                     nlist9.Add(x, original_signal_chafen2_min[4]);
                     nlist10.Add(x, original_signal_chafen2_min[7]);
                     nlist11.Add(x, original_signal_chafen2_min[10]);
+
+                }
+                CHname = string.Format("{0}", 1);
+                myCurve0 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 2);
+                myCurve1 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist1, Color.Red, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 3);
+                myCurve2 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 4);
+                myCurve3 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
+                
+
+                CHname = string.Format("{0}", 5);
+                myCurve4 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist4, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 6);
+                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist5, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 7);
+                myCurve6 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist6, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 8);
+                myCurve7 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist7, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 9);
+                myCurve8 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist8, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 10);
+                myCurve9 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist9, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 11);
+                myCurve10 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist10, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 12);
+                myCurve11 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist11, Color.Black, ZedGraph.SymbolType.None);
+                
+            }
+             if (comboBox2.SelectedIndex == 14)
+            {
+                for (int i = 0; i < original_num - 1; i++)
+                {
+
+                    x = (float)i * lenofpiece / (original_num - 1);
+                    nlist0.Add(x, (original_signal_chafen2[2, i]));
+                    nlist1.Add(x, (original_signal_chafen2[5, i]));
+                    nlist2.Add(x, (original_signal_chafen2[8, i]));
+                    nlist3.Add(x, (original_signal_chafen2[11, i]));
+                    nlist4.Add(x, original_signal_chafen2_max[2]);
+                    nlist5.Add(x, original_signal_chafen2_max[5]);
+                    nlist6.Add(x, original_signal_chafen2_max[8]);
+                    nlist7.Add(x, original_signal_chafen2_max[11]);
+                    nlist8.Add(x, original_signal_chafen2_min[2]);
+                    nlist9.Add(x, original_signal_chafen2_min[5]);
+                    nlist10.Add(x, original_signal_chafen2_min[8]);
+                    nlist11.Add(x, original_signal_chafen2_min[11]);
+
+                }
+                CHname = string.Format("{0}", 1);
+                myCurve0 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist0, Color.Blue, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 2);
+                myCurve1 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist1, Color.Red, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 3);
+                myCurve2 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist2, Color.DarkGreen, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 4);
+                myCurve3 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist3, Color.Pink, ZedGraph.SymbolType.None);
+
+
+                CHname = string.Format("{0}", 5);
+                myCurve4 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist4, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 6);
+                myCurve5 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist5, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 7);
+                myCurve6 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist6, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 8);
+                myCurve7 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist7, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 9);
+                myCurve8 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist8, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 10);
+                myCurve9 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist9, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 11);
+                myCurve10 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist10, Color.Black, ZedGraph.SymbolType.None);
+                CHname = string.Format("{0}", 12);
+                myCurve11 = zedGraphControl5.GraphPane.AddCurve(CHname, nlist11, Color.Black, ZedGraph.SymbolType.None);
+            }
+
+             if (comboBox2.SelectedIndex != 12 && comboBox2.SelectedIndex != 13 && comboBox2.SelectedIndex != 14) 
+            {
+                for (int i = 0; i < original_num - 1; i++)
+                {
+                    x = (float)i * lenofpiece / (original_num - 1);
+                    nlist0.Add(x, original_signal_chafen2[comboBox2.SelectedIndex, i]);
+                    nlist1.Add(x, original_signal_chafen2_max[comboBox2.SelectedIndex]);
+                    nlist2.Add(x, original_signal_chafen2_min[comboBox2.SelectedIndex]);
                 }
 
                 CHname = string.Format("{0}", 1);
@@ -4132,11 +4142,7 @@ namespace theHostComputer
             //画彩图
             //Contourf(g, (tongdao_num -1)* 10, original_num, cidao, original_num, (tongdao_num-1) * 10);
             //Contourf(g, (8 - 1) * 10, original_num-1, cidao_1, original_num-1, (8 - 1) * 10);
-
-
             Contourf(g, 320, (original_num - 1) * 5, cidao_1, (original_num - 1) * 5, 320);
-
-
             //Contourf(g, (6 - 1) * 10, original_num, cidao, original_num, (6 - 1) * 10); //现在是六个通道
             //画刻度
             g.DrawRectangle(blackPen, x, y, width, height);
@@ -4739,6 +4745,9 @@ namespace theHostComputer
                 {
                     sum_1 = sum_1 + Dydata2[2, j];
                 }
+
+
+
                 mean_1 = sum_1 / (original_num - 1);
                 for (int j = 0; j < original_num - 1; j++)
                 {
@@ -5522,6 +5531,16 @@ namespace theHostComputer
                 bdxstext3.Text = huiguixishu3;
 
             }
+        }
+
+        private void zedGraphControl1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void zedGraphControl2_Load(object sender, EventArgs e)
+        {
+
         }
     }
 }
