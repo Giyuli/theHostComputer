@@ -1089,8 +1089,6 @@ namespace theHostComputer
             zedGraphControl1.Invalidate();
         }
 
-        int count = 0;
-
         //动态曲线图添加数据
         private void ZedGraph1Adddata()
         {
@@ -1249,10 +1247,6 @@ namespace theHostComputer
                     xScale.Max = displayrow;
                     xScale.Min = xScale.Max - DXMAX;
                 }
-
-                count = count + i;
-
-                XtextBox.Text = count.ToString();
 
                 //每个点进行一次绘制
                 //zedGraphControl1.AxisChange();
