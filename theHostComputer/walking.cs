@@ -24,7 +24,10 @@ namespace theHostComputer
         private Thread thread1;
         private static IPEndPoint ipep;                //new IPEndPoint(IPAddress.Parse("192.168.114.12"), 1200);                 
         private UdpClient udpClient = new UdpClient(50000);
-        private string FilePath;  //数据文件路径         
+        private string FilePath;  //数据文件路径  
+       
+        //页面刷新开关
+        private bool refresh = false;
 
         private long[,] FADData = new long[2, 6];    //解码后的各个探头磁场数据
         private double[] FRealData = new double[5];    //计算得出的最终可用的磁场数据
@@ -811,8 +814,6 @@ namespace theHostComputer
             browseButton_2.Enabled = false;
             /////
             tiligaodu = Convert.ToDouble(TLBox_2.Text);  //读取提离高度
-
-
 
             if (browseflag == false)
             {
@@ -3655,983 +3656,974 @@ namespace theHostComputer
             DyForm2.Show();
         }
 
-        private void pic_2_Paint(object sender, PaintEventArgs e)
-        {
-            //缺陷定位
-            double cx = 0;
-            double cy = 0;
-            double cz = 0;
-            double cm = 0; //腐蚀面积
-            long ii = 0;
-            long jj = 0;
-            int i = 0;
-            double x0_2 = 0.025;
-            double y0_2 = 0.025;
-            double W_2 = 0.95;
-            double H_2 = 0.90;
-            float x = (float)(pic_2.Width * x0_2);
-            float y = (float)(pic_2.Height * y0_2);
-            float width = (float)(pic_2.Width * W_2);
-            float height = (float)(pic_2.Height * H_2);
-            int n = 0;
-            double C;
-            lenofpiece = double.Parse(DisText_2.Text);
-            double Sen = double.Parse(yztext_2.Text);//灵敏度
-            tiligaodu = double.Parse(TLBox_2.Text);
-            double D = double.Parse(DText_2.Text);
-
-            double max1 = 0;
-            double min1 = 0;
-            double max2 = 0;
-            double min2 = 0;
-            double max3 = 0;
-            double min3 = 0;
-            double max4 = 0;
-            double min4 = 0;
-
-            double up1 = 0;
-            double down1 = 0;
-            double up2 = 0;
-            double down2 = 0;
-            double up3 = 0;
-            double down3 = 0;
-            double up4 = 0;
-            double down4 = 0;
-
-            double value1 = 0;
-            double value2 = 0;
-            double value3 = 0;
-            double value4 = 0;
-
-
-
-
-            double sum_1 = 0;
-            double mean_1 = 0;
-            double biaozhuncha_sum_1 = 0;
-            double biaozhuncha_1 = 0;
-            double[] ysdata_new_1 = new double[1000000];
-            double[] Dydata_new_1 = new double[1000000];
-
-            double sum_3 = 0;
-            double mean_3 = 0;
-            double biaozhuncha_sum_3 = 0;
-            double biaozhuncha_3 = 0;
-            double[] ysdata_new_3 = new double[1000000];
-            double[] Dydata_new_3 = new double[1000000];
-
-            double[] ysdata_new = new double[1000000];
-            double[] Dydata_new = new double[1000000];
-
-
-
-
-
-            System.Random rnd = new System.Random();
-            if (runflag && pointflag && readflag)
-            {
-                Graphics gg = e.Graphics;
-                cx = (currentPoint.X - x) * lenofpiece / width;
-                cy = (pic_2.Height - currentPoint.Y - 0.075 * pic_2.Height) * widthOfPiece / height;
-
-                n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
-                C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
-                F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
-                //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
-
-                ////////////////////////////////张量///////////////////////////////////////////
-                //if (Math.Abs(Freaddata[0, n]) > 0)
-                //{
-                //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
-                //    {
-                //        F1 = (Freaddata[0, n] + 400) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 100 && Math.Abs(Freaddata[0, n]) <= 200)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 200 && Math.Abs(Freaddata[0, n]) <= 300)
-                //    {
-                //        F1 = (Freaddata[0, n] + 200) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 300 && Math.Abs(Freaddata[0, n]) <= 400)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 400 && Math.Abs(Freaddata[0, n]) <= 500)
-                //    {
-                //        F1 = Freaddata[0, n] * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 500 && Math.Abs(Freaddata[0, n]) <= 600)
-                //    {
-                //        F1 = (Freaddata[0, n] - 100) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //}
-                //////////////////////////////////////////////////////////////////////////////
-                max1 = ysdata[2, 0];
-                min1 = ysdata[2, 0];
-                max2 = ysdata[5, 0];
-                min2 = ysdata[5, 0];
-                max3 = ysdata[8, 0];
-                min3 = ysdata[8, 0];
-                max4 = ysdata[11, 0];
-                min4 = ysdata[11, 0];
-                for (i = 0; i < original_num - 1; i++)
-                {
-                    if (max1 < ysdata[2, i + 1])
-                    {
-                        max1 = ysdata[2, i + 1];
-                    }
-                    if (min1 > ysdata[2, i + 1])
-                    {
-                        min1 = ysdata[2, i + 1];
-                    }
-                }
-                for (i = 0; i < original_num - 1; i++)
-                {
-                    if (max2 < ysdata[5, i + 1])
-                    {
-                        max2 = ysdata[5, i + 1];
-                    }
-                    if (min2 > ysdata[5, i + 1])
-                    {
-                        min2 = ysdata[5, i + 1];
-                    }
-                }
-                for (i = 0; i < original_num - 1; i++)
-                {
-                    if (max3 < ysdata[8, i + 1])
-                    {
-                        max3 = ysdata[8, i + 1];
-                    }
-                    if (min3 > ysdata[8, i + 1])
-                    {
-                        min3 = ysdata[8, i + 1];
-                    }
-                }
-                for (i = 0; i < original_num - 1; i++)
-                {
-                    if (max4 < ysdata[11, i + 1])
-                    {
-                        max4 = ysdata[11, i + 1];
-                    }
-                    if (min4 > ysdata[11, i + 1])
-                    {
-                        min4 = ysdata[11, i + 1];
-                    }
-                }
-
-                //if (ysdata[2, n] >= 0 && ysdata[2, n] < 10000)
-                //{
-                //    ysdata[2, n] = ysdata[2, n] * 10;
-                //}
-                //if (ysdata[5, n] >= 0 && ysdata[5, n] < 10000)
-                //{
-                //    ysdata[5, n] = ysdata[5, n] * 10;
-                //}
-                //if (ysdata[8, n] >= 0 && ysdata[8, n] < 10000)
-                //{
-                //    ysdata[8, n] = ysdata[8, n] * 10;
-                //}
-                //if (ysdata[11, n] >= 0 && ysdata[11, n] < 10000)
-                //{
-                //    ysdata[11, n] = ysdata[11, n] * 10;
-                //}
-
-                //if (ysdata[2, n] >= 10000 && ysdata[2, n] < 20000)
-                //{
-                //    ysdata[2, n] = (ysdata[2, n] - 10000) * 10;
-                //}
-                //if (ysdata[5, n] >= 10000 && ysdata[5, n] < 20000)
-                //{
-                //    ysdata[5, n] = (ysdata[5, n] - 10000) * 10;
-                //}
-                //if (ysdata[8, n] >= 10000 && ysdata[8, n] < 20000)
-                //{
-                //    ysdata[8, n] = (ysdata[8, n] - 10000) * 10;
-                //}
-                //if (ysdata[11, n] >= 10000 && ysdata[11, n] < 20000)
-                //{
-                //    ysdata[11, n] = (ysdata[11, n] - 10000) * 10;
-                //}
-
-                //if (ysdata[2, n] >= 20000 && ysdata[2, n] < 30000)
-                //{
-                //    ysdata[2, n] = (ysdata[2, n] - 20000) * 10;
-                //}
-                //if (ysdata[5, n] >= 20000 && ysdata[5, n] < 30000)
-                //{
-                //    ysdata[5, n] = (ysdata[5, n] - 20000) * 10;
-                //}
-                //if (ysdata[8, n] >= 20000 && ysdata[8, n] < 30000)
-                //{
-                //    ysdata[8, n] = (ysdata[8, n] - 20000) * 10;
-                //}
-                //if (ysdata[11, n] >= 20000 && ysdata[11, n] < 30000)
-                //{
-                //    ysdata[11, n] = (ysdata[11, n] - 20000) * 10;
-                //}
-
-
-                //if (tiligaodu >= 1000 && tiligaodu < 1800)
-                //{
-                //    tiligaodu1 = 150;
-                //}
-                //if (tiligaodu >= 1800 && tiligaodu < 2500)
-                //{
-                //    tiligaodu1 = 200;
-                //}
-                //if (tiligaodu >= 2500 && tiligaodu < 3000)
-                //{
-                //    tiligaodu1 = 250;
-                //}
-                //if(tiligaodu1==150)
-                //{
-                //    if (ysdata[2, n] > 30000 && ysdata[2, n] < 50000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 20000;
-                //    }
-                //    if (ysdata[5, n] > 30000 && ysdata[5, n] < 50000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 20000;
-                //    }
-                //    if (ysdata[8, n] > 30000 && ysdata[8, n] < 50000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 20000;
-                //    }
-                //    if (ysdata[11, n] > 30000 && ysdata[11, n] < 50000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 20000;
-                //    }
-
-                //    if (ysdata[2, n] > 40000 && ysdata[2, n] < 60000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 30000;
-                //    }
-                //    if (ysdata[5, n] > 40000 && ysdata[5, n] < 60000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 30000;
-                //    }
-                //    if (ysdata[8, n] > 40000 && ysdata[8, n] < 60000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 30000;
-                //    }
-                //    if (ysdata[11, n] > 40000 && ysdata[11, n] < 60000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 30000;
-                //    }
-
-                //    if (ysdata[2, n] > 60000 && ysdata[2, n] < 80000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 50000;
-                //    }
-                //    if (ysdata[5, n] > 60000 && ysdata[5, n] < 80000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 50000;
-                //    }
-                //    if (ysdata[8, n] > 60000 && ysdata[8, n] < 80000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 50000;
-                //    }
-                //    if (ysdata[11, n] > 60000 && ysdata[11, n] < 80000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 50000;
-                //    }
-
-                //    if (ysdata[2, n] > 80000 && ysdata[2, n] < 100000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 70000;
-                //    }
-                //    if (ysdata[5, n] > 80000 && ysdata[5, n] < 100000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 70000;
-                //    }
-                //    if (ysdata[8, n] > 80000 && ysdata[8, n] < 100000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 70000;
-                //    }
-                //    if (ysdata[11, n] > 80000 && ysdata[11, n] < 100000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 70000;
-                //    }
-                //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1))*20000) + 10000;
-                //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 10000;
-                //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 10000;
-                //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 10000;
-                //}
-                //if(tiligaodu1==200)
-                //{
-                //    if (ysdata[2, n] > 40000 && ysdata[2, n] < 60000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 20000;
-                //    }
-                //    if (ysdata[5, n] > 40000 && ysdata[5, n] < 60000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 20000;
-                //    }
-                //    if (ysdata[8, n] > 40000 && ysdata[8, n] < 60000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 20000;
-                //    }
-                //    if (ysdata[11, n] > 40000 && ysdata[11, n] < 60000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 20000;
-                //    }
-
-                //    if (ysdata[2, n] > 0 && ysdata[2, n] < 20000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] + 20000;
-                //    }
-                //    if (ysdata[5, n] > 0 && ysdata[5, n] < 20000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] + 20000;
-                //    }
-                //    if (ysdata[8, n] > 0 && ysdata[8, n] < 20000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] + 20000;
-                //    }
-                //    if (ysdata[11, n] > 0 && ysdata[11, n] < 20000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] + 20000;
-                //    }
-                //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1)) * 20000) + 20000;
-                //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 20000;
-                //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 20000;
-                //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 20000;
-                //}
-                //if(tiligaodu1==250)
-                //{
-                //    if (ysdata[2, n] > 45000 && ysdata[2, n] < 65000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] - 20000;
-                //    }
-                //    if (ysdata[5, n] > 45000 && ysdata[5, n] < 65000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] - 20000;
-                //    }
-                //    if (ysdata[8, n] > 45000 && ysdata[8, n] < 65000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] - 20000;
-                //    }
-                //    if (ysdata[11, n] > 45000 && ysdata[11, n] < 65000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] - 20000;
-                //    }
-
-                //    if (ysdata[2, n] > 500 && ysdata[2, n] < 25000)
-                //    {
-                //        ysdata[2, n] = ysdata[2, n] + 20000;
-                //    }
-                //    if (ysdata[5, n] > 500 && ysdata[5, n] < 25000)
-                //    {
-                //        ysdata[5, n] = ysdata[5, n] + 20000;
-                //    }
-                //    if (ysdata[8, n] > 500 && ysdata[8, n] < 25000)
-                //    {
-                //        ysdata[8, n] = ysdata[8, n] + 20000;
-                //    }
-                //    if (ysdata[11, n] > 500 && ysdata[11, n] < 25000)
-                //    {
-                //        ysdata[11, n] = ysdata[11, n] + 20000;
-                //    }
-                //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1)) * 20000) + 25000;
-                //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 25000;
-                //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 25000;
-                //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 25000;
-                //}
-
-                up1 = ((max1 / 1000) + 1) * 1000;
-                down1 = ((min1 / 1000) - 1) * 1000;
-                value1 = (((ysdata[2, n] - down1) / (up1 - down1)) * 10000) + 10000;
-
-                up2 = ((max2 / 1000) + 1) * 1000;
-                down2 = ((min2 / 1000) - 1) * 1000;
-                value2 = (((ysdata[5, n] - down2) / (up2 - down2)) * 10000) + 10000;
-
-                up3 = ((max3 / 1000) + 1) * 1000;
-                down3 = ((min3 / 1000) - 1) * 1000;
-                value3 = (((ysdata[8, n] - down3) / (up3 - down3)) * 10000) + 10000;
-
-                up4 = ((max4 / 1000) + 1) * 1000;
-                down4 = ((min4 / 1000) - 1) * 1000;
-                value4 = (((ysdata[11, n] - down4) / (up4 - down4)) * 10000) + 10000;
-
-                //if(ysdata[2,n]>=10000&&ysdata[2,n]<30000)
-                //{
-                //    value1=(((ysdata[2,n]-10000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[5,n]>=10000&&ysdata[5,n]<30000)
-                //{
-                //    value2=(((ysdata[5,n]-10000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[8,n]>=10000&&ysdata[8,n]<30000)
-                //{
-                //    value3=(((ysdata[8,n]-10000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[11,n]>=10000&&ysdata[11,n]<30000)
-                //{
-                //    value4=(((ysdata[11,n]-10000)/20000)*10000)+10000;
-                //}
-
-                //if(ysdata[2,n]>=20000&&ysdata[2,n]<40000)
-                //{
-                //    value1=(((ysdata[2,n]-20000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[5,n]>=20000&&ysdata[5,n]<40000)
-                //{
-                //    value2=(((ysdata[5,n]-20000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[8,n]>=20000&&ysdata[8,n]<40000)
-                //{
-                //    value3=(((ysdata[8,n]-20000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[11,n]>=20000&&ysdata[11,n]<40000)
-                //{
-                //    value4=(((ysdata[11,n]-20000)/20000)*10000)+10000;
-                //}
-
-                //if(ysdata[2,n]>=30000&&ysdata[2,n]<50000)
-                //{
-                //    value1=(((ysdata[2,n]-30000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[5,n]>=30000&&ysdata[5,n]<50000)
-                //{
-                //    value2=(((ysdata[5,n]-30000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[8,n]>=30000&&ysdata[8,n]<50000)
-                //{
-                //    value3=(((ysdata[8,n]-30000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[11,n]>=30000&&ysdata[11,n]<50000)
-                //{
-                //    value4=(((ysdata[11,n]-30000)/20000)*10000)+10000;
-                //}
-
-                //if(ysdata[2,n]>=40000&&ysdata[2,n]<60000)
-                //{
-                //    value1=(((ysdata[2,n]-40000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[5,n]>=40000&&ysdata[5,n]<60000)
-                //{
-                //    value2=(((ysdata[5,n]-40000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[8,n]>=40000&&ysdata[8,n]<60000)
-                //{
-                //    value3=(((ysdata[8,n]-40000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[11,n]>=40000&&ysdata[11,n]<60000)
-                //{
-                //    value4=(((ysdata[11,n]-40000)/20000)*10000)+10000;
-                //}
-
-                //if(ysdata[2,n]>=50000&&ysdata[2,n]<70000)
-                //{
-                //    value1=(((ysdata[2,n]-50000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[5,n]>=50000&&ysdata[5,n]<70000)
-                //{
-                //    value2=(((ysdata[5,n]-50000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[8,n]>=50000&&ysdata[8,n]<70000)
-                //{
-                //    value3=(((ysdata[8,n]-50000)/20000)*10000)+10000;
-                //}
-                //if(ysdata[11,n]>=50000&&ysdata[11,n]<70000)
-                //{
-                //    value4=(((ysdata[11,n]-50000)/20000)*10000)+10000;
-                //}
-
-
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_1 = sum_1 + Dydata2[2, j];
-                }
-                mean_1 = sum_1 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
-                }
-                biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
-                }
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_3 = sum_3 + Dydata2[8, j];
-                }
-                mean_3 = sum_3 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
-                }
-                biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
-                }
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
-                }
-
-
-
-
-
-                //F1 = Math.Pow(150, 2) / value1;
-                //F2 = Math.Pow(150, 2) / value2;
-                //F3 = Math.Pow(150, 2) / value3;
-                //F4 = Math.Pow(150, 2) / value4;
-                if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
-                {
-                    cz = 0;
-
-                }
-                if (bdxstext1_2.Text == "")
-                {
-                    double fushi_canshu_a = 0;
-                    double fushi_canshu_b = 0;
-
-                    int TLBox1 = Int32.Parse(TLBox_2.Text);
-                    if (tiligaodu >= 0 && tiligaodu < 250)
-                    {
-                        fushi_canshu_a = 9.45E+01;
-                        fushi_canshu_b = -1.346;
-
-                    }
-                    if (tiligaodu >= 250 && tiligaodu < 480)
-                    {
-                        fushi_canshu_a = 120.6;
-                        fushi_canshu_b = -1.385;
-                    }
-                    if (tiligaodu >= 480 && tiligaodu < 700)
-                    {
-                        fushi_canshu_a = 61.12;
-                        fushi_canshu_b = -1.027;
-                    }
-                    if (tiligaodu >= 700 && tiligaodu < 970)
-                    {
-                        fushi_canshu_a = 260.2;
-                        fushi_canshu_b = -1.5;
-                    }
-                    if (tiligaodu >= 970 && tiligaodu < 1100)
-                    {
-                        fushi_canshu_a = 46.3;
-                        fushi_canshu_b = -1.054;
-                    }
-                    if (tiligaodu >= 1100 && tiligaodu < 1350)
-                    {
-                        fushi_canshu_a = 1.05E+06;
-                        fushi_canshu_b = -9.415;
-                    }
-                    if (tiligaodu >= 1350 && tiligaodu < 1620)
-                    {
-                        fushi_canshu_a = 10.5;
-                        fushi_canshu_b = -1.584;
-                    }
-                    if (tiligaodu >= 1620 && tiligaodu < 1860)
-                    {
-                        fushi_canshu_a = 784.8;
-                        fushi_canshu_b = -3.046;
-                    }
-                    if (tiligaodu > 1860)
-                    {
-                        fushi_canshu_a = 28.22;
-                        fushi_canshu_b = -1.784;
-                    }
-                    //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                    // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
-                    cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * ysdata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                    }
-
-
-                }
-
-                else
-                {
-                    double huiguixishu11 = Convert.ToDouble(huiguixishu1_2);
-                    double huiguixishu22 = Convert.ToDouble(huiguixishu2_2);
-
-                    cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
-                    }
-                    if (cz == 0)
-                    {
-                        cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
-                    }
-
-                    if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
-                    {
-                        cz = 0;
-                    }
-                }
-
-
-
-
-
-
-
-
-
-                //else
-                //{
-                //    cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                //    if (cz > ThickOftube)
-                //    {
-                //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    }
-                //    //if(tiligaodu1 == 150)
-                //    //{
-                //    //    cz = (40 * Math.Exp(-1.5* F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                //    //}
-                //    //if (tiligaodu1 == 200)
-                //    //{
-                //    //    cz = (0.6* Math.Exp(1.5 * F1) + 0.6 * Math.Exp(1.5 * F2) + 0.6 * Math.Exp(1.5 * F3) + 0.6 * Math.Exp(1.5 * F4)) / 4;
-                //    //}
-                //    //if (tiligaodu1 == 250)
-                //    //{
-                //    //    cz = (0.4 * Math.Exp(1.5 * F1) + 0.4 * Math.Exp(1.5 * F2) + 0.4 * Math.Exp(1.5 * F3) + 0.4 * Math.Exp(1.5 * F4)) / 4;
-                //    //}
-                //    //if (cz > ThickOftube)
-                //    //{
-                //    //    //cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    //    ysdata[2, n] = ysdata[2, n] + 10000;
-                //    //    ysdata[5, n] = ysdata[5, n] + 10000;
-                //    //    ysdata[8, n] = ysdata[8, n] + 10000;
-                //    //    ysdata[11, n] = ysdata[11, n] + 10000;
-
-                //    //    F1 = Math.Pow(tiligaodu1, 2) / ysdata[2, n];
-                //    //    F2 = Math.Pow(tiligaodu1, 2) / ysdata[5, n];
-                //    //    F3 = Math.Pow(tiligaodu1, 2) / ysdata[8, n];
-                //    //    F4 = Math.Pow(tiligaodu1, 2) / ysdata[11, n];
-
-                //    //    if (tiligaodu1 == 150)
-                //    //    {
-                //    //        cz = (1.2 * Math.Exp(1.5 * F1) + 1.2 * Math.Exp(1.5 * F2) + 1.2 * Math.Exp(1.5 * F3) + 1.2 * Math.Exp(1.5 * F4)) / 4;
-                //    //    }
-                //    //    if (tiligaodu1 == 200)
-                //    //    {
-                //    //        cz = (0.6 * Math.Exp(1.5 * F1) + 0.6 * Math.Exp(1.5 * F2) + 0.6 * Math.Exp(1.5 * F3) + 0.6 * Math.Exp(1.5 * F4)) / 4;
-                //    //    }
-                //    //    if (tiligaodu1 == 250)
-                //    //    {
-                //    //        cz = (0.4 * Math.Exp(1.5 * F1) + 0.4 * Math.Exp(1.5 * F2) + 0.4 * Math.Exp(1.5 * F3) + 0.4 * Math.Exp(1.5 * F4)) / 4;
-                //    //    }
-                //    //    if (cz > ThickOftube)
-                //    //    {
-                //    //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    //    }
-                //    //}
-                //}
-                //else 
-                //{
-                //    if ((D <= 100) && (D > 0))
-                //    {
-                //        cz = (2.182 * 0.00000001 * Math.Exp(3.009 * F1) + 1.92 * 0.00000001 * Math.Exp(3.014 * F2) + 0.9927 * 0.00000001 * Math.Exp(3.132 * F3) + 2.978 * 0.00000001 * Math.Exp(3.017 * F4)) / 4;
-                //    }
-                //    if ((D > 100) && (D <= 200))
-                //    {
-                //        cz = (3.826 * Math.Pow(10, -5) * Math.Exp(1.762 * F1) + 4.291 * Math.Pow(10, -5) * Math.Exp(1.735 * F2) + 3.799 * Math.Pow(10, -5) * Math.Exp(1.767 * F3) + 3.505 * Math.Pow(10, -5) * Math.Exp(1.809 * F4)) / 4;
-                //    }
-                //    if ((D > 200) && (D <= 300))
-                //    {
-                //        cz = (1.04 * Math.Pow(10, -7) * Math.Exp(3.039 * F1) + 0.9371 * Math.Pow(10, -7) * Math.Exp(3.044 * F2) + 1.083 * Math.Pow(10, -7) * Math.Exp(3.04 * F3) + 1.239 * Math.Pow(10, -7) * Math.Exp(3.067 * F4)) / 4;
-                //    }
-                //    if ((D > 300) && (D <= 400))
-                //    {
-                //        cz = (7.303 * Math.Pow(10, 4) * Math.Exp(-1.941 * F1) + 7.271 * Math.Pow(10, 4) * Math.Exp(-1.932 * F2) + 7.417 * Math.Pow(10, 4) * Math.Exp(-1.948 * F3) + 7.482 * Math.Pow(10, 4) * Math.Exp(-1.982 * F4)) / 4;
-                //    }
-                //    if ((D > 400) && (D <= 500))
-                //    {
-                //        cz = (8.494 * Math.Pow(10, 31) * Math.Exp(-10.56 * F1) + 3.215 * Math.Pow(10, 30) * Math.Exp(-10.06 * F2) + 1.375 * Math.Pow(10, 32) * Math.Exp(-10.68 * F3) + 6.185 * Math.Pow(10, 33) * Math.Exp(-11.41 * F4)) / 4;
-                //    }
-                //    if (D > 500)
-                //    {
-                //        cz = (1.03 * Math.Pow(10, 21) * Math.Exp(-4.3 * F1) + 5.897 * Math.Pow(10, 20) * Math.Exp(-4.241 * F2) + 1.019 * Math.Pow(10, 21) * Math.Exp(-4.317 * F3) + 2.076 * Math.Pow(10, 21) * Math.Exp(-4.44 * F4)) / 4;
-                //    }
-                //    if (cz > ThickOftube)
-                //    {
-                //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    }
-
-                //}
-                //else
-                //{
-                //    if ((D <= 100) && (D > 0))
-                //    {
-                //        cz = (2.468 * Math.Exp(0.8385 * F1) + 2.062 * Math.Exp(1.111 * F2) + 2.113 * Math.Exp(1.079 * F3) + 2.588 * Math.Exp(0.7795 * F4)) / 4;
-                //    }
-                //    if ((D > 100) && (D <= 200))
-                //    {
-                //        cz = (3.515 * Math.Exp(1.97 * F1) + 3.289 * Math.Exp(1.97 * F2) + 3.401 * Math.Exp(1.98 * F3) + 3.499 * Math.Exp(2.07 * F4)) / 4;
-                //    }
-                //    if ((D > 200) && (D <= 300))
-                //    {
-                //        cz = (1.904 * Math.Exp(3.042 * F1) + 2.177 * Math.Exp(3.013 * F2) + 1.818 * Math.Exp(3.057 * F3) + 1.514 * Math.Exp(3.132 * F4)) / 4;
-                //    }
-                //    if ((D > 300) && (D <= 400))
-                //    {
-                //        cz = (4.457 * Math.Exp(1.715 * F1) + 4.64 * Math.Exp(1.714 * F2) + 4.605 * Math.Exp(1.723 * F3) + 4.439 * Math.Exp(1.745 * F4)) / 4;
-                //    }
-                //    if ((D > 400) && (D <= 500))
-                //    {
-                //        cz = (4.4663 * Math.Exp(2.509 * F1) + 1.952 * Math.Exp(2.37 * F2) + 7.502 * Math.Exp(2.593 * F3) + 2.372 * Math.Exp(2.813 * F4)) / 4;
-                //    }
-                //    if (D > 500)
-                //    {
-                //        cz = (1.188 * Math.Exp(3.4 * F1) + 2.677 * Math.Exp(3.2 * F2) + 1.54 * Math.Exp(3.4 * F3) + 1.38 * Math.Exp(3.8 * F4)) / 4;
-                //    }
-                //    if (cz > ThickOftube)
-                //    {
-                //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    }
-                //}
-
-                gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
-                gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
-
-                ZtextBox_2.Text = string.Format("{0:0.00}", cz) + "mm";
-
-                ////计算区域面积
-                if (cishu == 4)
-                {
-                    double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
-                    double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
-                    double area = bianchang * kuandu / 100;    //面积(平方厘米)
-                    MjtextBox_2.Text = string.Format("{0:0.0}", area) + "cm²";
-                    //MjtextBox_2.Text = Convert .ToString (area);
-                }
-                /////
-            }
-            else
-            {
-                Graphics gg = e.Graphics;
-                cx = (currentPoint.X - x) * lenofpiece / width;
-                cy = (pic_2.Height - currentPoint.Y - 0.075 * pic_2.Height) * widthOfPiece / height;
-
-                n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
-                C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
-                F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
-                //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
-                //max1 = Dydata2[2, 0];
-                //min1 = Dydata2[2, 0];
-                //max2 = Dydata2[5, 0];
-                //min2 = Dydata2[5, 0];
-                //max3 = Dydata2[8, 0];
-                //min3 = Dydata2[8, 0];
-                //max4 = Dydata2[11, 0];
-                //min4 = Dydata2[11, 0];
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max1 < Dydata2[2, i + 1])
-                //    {
-                //        max1 = Dydata2[2, i + 1];
-                //    }
-                //    if (min1 > Dydata2[2, i + 1])
-                //    {
-                //        min1 = Dydata2[2, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max2 < Dydata2[5, i + 1])
-                //    {
-                //        max2 = Dydata2[5, i + 1];
-                //    }
-                //    if (min2 > Dydata2[5, i + 1])
-                //    {
-                //        min2 = Dydata2[5, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max3 < Dydata2[8, i + 1])
-                //    {
-                //        max3 = Dydata2[8, i + 1];
-                //    }
-                //    if (min3 > Dydata2[8, i + 1])
-                //    {
-                //        min3 = Dydata2[8, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max4 < Dydata2[11, i + 1])
-                //    {
-                //        max4 = Dydata2[11, i + 1];
-                //    }
-                //    if (min4 > Dydata2[11, i + 1])
-                //    {
-                //        min4 = Dydata2[11, i + 1];
-                //    }
-                //}
-
-                //up1 = ((max1 / 1000) + 1) * 1000;
-                //down1 = ((min1 / 1000) - 1) * 1000;
-                //value1 = (((Dydata2[2, n] - down1) / (up1 - down1)) * 10000) + 10000;
-
-                //up2 = ((max2 / 1000) + 1) * 1000;
-                //down2 = ((min2 / 1000) - 1) * 1000;
-                //value2 = (((Dydata2[5, n] - down2) / (up2 - down2)) * 10000) + 10000;
-
-                //up3 = ((max3 / 1000) + 1) * 1000;
-                //down3 = ((min3 / 1000) - 1) * 1000;
-                //value3 = (((Dydata2[8, n] - down3) / (up3 - down3)) * 10000) + 10000;
-
-                //up4 = ((max4 / 1000) + 1) * 1000;
-                //down4 = ((min4 / 1000) - 1) * 1000;
-                //value4 = (((Dydata2[11, n] - down4) / (up4 - down4)) * 10000) + 10000;
-
-                //F1 = Math.Pow(150, 2) / value1;
-                //F2 = Math.Pow(150, 2) / value2;
-                //F3 = Math.Pow(150, 2) / value3;
-                //F4 = Math.Pow(150, 2) / value4;
-
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_1 = sum_1 + Dydata2[2, j];
-                }
-                mean_1 = sum_1 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
-                }
-                biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
-                }
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_3 = sum_3 + Dydata2[8, j];
-                }
-                mean_3 = sum_3 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
-                }
-                biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
-                }
-
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
-                }
-                ////////////////////////////////////////////
-                if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
-                {
-                    cz = 0;
-                }
-                if (bdxstext1_2.Text == "")
-                {
-                    double fushi_canshu_a = 0;
-                    double fushi_canshu_b = 0;
-
-                    int TLBox1 = Int32.Parse(TLBox_2.Text);
-                    if (tiligaodu >= 0 && tiligaodu < 250)
-                    {
-                        fushi_canshu_a = 9.45E+01;
-                        fushi_canshu_b = -1.346;
-
-                    }
-                    if (tiligaodu >= 250 && tiligaodu < 480)
-                    {
-                        fushi_canshu_a = 120.6;
-                        fushi_canshu_b = -1.385;
-                    }
-                    if (tiligaodu >= 480 && tiligaodu < 700)
-                    {
-                        fushi_canshu_a = 61.12;
-                        fushi_canshu_b = -1.027;
-                    }
-                    if (tiligaodu >= 700 && tiligaodu < 970)
-                    {
-                        fushi_canshu_a = 260.2;
-                        fushi_canshu_b = -1.5;
-                    }
-                    if (tiligaodu >= 970 && tiligaodu < 1100)
-                    {
-                        fushi_canshu_a = 46.3;
-                        fushi_canshu_b = -1.054;
-                    }
-                    if (tiligaodu >= 1100 && tiligaodu < 1350)
-                    {
-                        fushi_canshu_a = 1.05E+06;
-                        fushi_canshu_b = -9.415;
-                    }
-                    if (tiligaodu >= 1350 && tiligaodu < 1620)
-                    {
-                        fushi_canshu_a = 10.5;
-                        fushi_canshu_b = -1.584;
-                    }
-                    if (tiligaodu >= 1620 && tiligaodu < 1860)
-                    {
-                        fushi_canshu_a = 784.8;
-                        fushi_canshu_b = -3.046;
-                    }
-                    if (tiligaodu > 1860)
-                    {
-                        fushi_canshu_a = 28.22;
-                        fushi_canshu_b = -1.784;
-                    }
-                    //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                    // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
-                    cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * Dydata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                    }
-                    if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
-                    {
-                        cz = 0;
-                    }
-
-
-                    else
-                    {
-                        cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                        if (cz > ThickOftube)
-                        {
-                            cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                        }
-                    }
-
-                    gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
-                    gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
-
-                    ZtextBox_2.Text = string.Format("{0:0.00}", cz) + "mm";
-
-                    ////计算区域面积
-                    if (cishu == 4)
-                    {
-                        double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
-                        double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
-                        double area = bianchang * kuandu / 100;    //面积(平方厘米)
-                        MjtextBox_2.Text = string.Format("{0:0.0}", area) + "cm²";
-                        //MjtextBox_2.Text = Convert .ToString (area);
-                    }
-                }
-            }
-        }
+        //绘画损失初始图
+        //private void pic_2_Paint(object sender, PaintEventArgs e)
+        //{
+        //    //缺陷定位
+        //    double cx = 0;
+        //    double cy = 0;
+        //    double cz = 0;
+        //    int i = 0;
+        //    double x0_2 = 0.025;
+        //    double y0_2 = 0.025;
+        //    double W_2 = 0.95;
+        //    double H_2 = 0.90;
+        //    float x = (float)(pic_2.Width * x0_2);
+        //    float y = (float)(pic_2.Height * y0_2);
+        //    float width = (float)(pic_2.Width * W_2);
+        //    float height = (float)(pic_2.Height * H_2);
+        //    int n = 0;
+        //    double C;
+        //    lenofpiece = double.Parse(DisText_2.Text);
+        //    double Sen = double.Parse(yztext_2.Text);//灵敏度
+        //    tiligaodu = double.Parse(TLBox_2.Text);
+        //    double D = double.Parse(DText_2.Text);
+
+        //    double max1 = 0;
+        //    double min1 = 0;
+        //    double max2 = 0;
+        //    double min2 = 0;
+        //    double max3 = 0;
+        //    double min3 = 0;
+        //    double max4 = 0;
+        //    double min4 = 0;
+
+        //    double up1 = 0;
+        //    double down1 = 0;
+        //    double up2 = 0;
+        //    double down2 = 0;
+        //    double up3 = 0;
+        //    double down3 = 0;
+        //    double up4 = 0;
+        //    double down4 = 0;
+
+        //    double value1 = 0;
+        //    double value2 = 0;
+        //    double value3 = 0;
+        //    double value4 = 0;
+
+        //    double sum_1 = 0;
+        //    double mean_1 = 0;
+        //    double biaozhuncha_sum_1 = 0;
+        //    double biaozhuncha_1 = 0;
+        //    double[] ysdata_new_1 = new double[1000000];
+        //    double[] Dydata_new_1 = new double[1000000];
+
+        //    double sum_3 = 0;
+        //    double mean_3 = 0;
+        //    double biaozhuncha_sum_3 = 0;
+        //    double biaozhuncha_3 = 0;
+        //    double[] ysdata_new_3 = new double[1000000];
+        //    double[] Dydata_new_3 = new double[1000000];
+
+        //    double[] ysdata_new = new double[1000000];
+        //    double[] Dydata_new = new double[1000000];
+
+        //    System.Random rnd = new System.Random();
+        //    if (runflag && pointflag && readflag)
+        //    {
+        //        Graphics gg = e.Graphics;
+        //        cx = (currentPoint.X - x) * lenofpiece / width;
+        //        cy = (pic_2.Height - currentPoint.Y - 0.075 * pic_2.Height) * widthOfPiece / height;
+
+        //        n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
+        //        C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
+        //        F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
+        //        //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
+
+        //        ////////////////////////////////张量///////////////////////////////////////////
+        //        //if (Math.Abs(Freaddata[0, n]) > 0)
+        //        //{
+        //        //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 400) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 100 && Math.Abs(Freaddata[0, n]) <= 200)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 200 && Math.Abs(Freaddata[0, n]) <= 300)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 200) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 300 && Math.Abs(Freaddata[0, n]) <= 400)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 400 && Math.Abs(Freaddata[0, n]) <= 500)
+        //        //    {
+        //        //        F1 = Freaddata[0, n] * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 500 && Math.Abs(Freaddata[0, n]) <= 600)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] - 100) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //}
+        //        //////////////////////////////////////////////////////////////////////////////
+        //        max1 = ysdata[2, 0];
+        //        min1 = ysdata[2, 0];
+        //        max2 = ysdata[5, 0];
+        //        min2 = ysdata[5, 0];
+        //        max3 = ysdata[8, 0];
+        //        min3 = ysdata[8, 0];
+        //        max4 = ysdata[11, 0];
+        //        min4 = ysdata[11, 0];
+        //        for (i = 0; i < original_num - 1; i++)
+        //        {
+        //            if (max1 < ysdata[2, i + 1])
+        //            {
+        //                max1 = ysdata[2, i + 1];
+        //            }
+        //            if (min1 > ysdata[2, i + 1])
+        //            {
+        //                min1 = ysdata[2, i + 1];
+        //            }
+        //        }
+        //        for (i = 0; i < original_num - 1; i++)
+        //        {
+        //            if (max2 < ysdata[5, i + 1])
+        //            {
+        //                max2 = ysdata[5, i + 1];
+        //            }
+        //            if (min2 > ysdata[5, i + 1])
+        //            {
+        //                min2 = ysdata[5, i + 1];
+        //            }
+        //        }
+        //        for (i = 0; i < original_num - 1; i++)
+        //        {
+        //            if (max3 < ysdata[8, i + 1])
+        //            {
+        //                max3 = ysdata[8, i + 1];
+        //            }
+        //            if (min3 > ysdata[8, i + 1])
+        //            {
+        //                min3 = ysdata[8, i + 1];
+        //            }
+        //        }
+        //        for (i = 0; i < original_num - 1; i++)
+        //        {
+        //            if (max4 < ysdata[11, i + 1])
+        //            {
+        //                max4 = ysdata[11, i + 1];
+        //            }
+        //            if (min4 > ysdata[11, i + 1])
+        //            {
+        //                min4 = ysdata[11, i + 1];
+        //            }
+        //        }
+
+        //        //if (ysdata[2, n] >= 0 && ysdata[2, n] < 10000)
+        //        //{
+        //        //    ysdata[2, n] = ysdata[2, n] * 10;
+        //        //}
+        //        //if (ysdata[5, n] >= 0 && ysdata[5, n] < 10000)
+        //        //{
+        //        //    ysdata[5, n] = ysdata[5, n] * 10;
+        //        //}
+        //        //if (ysdata[8, n] >= 0 && ysdata[8, n] < 10000)
+        //        //{
+        //        //    ysdata[8, n] = ysdata[8, n] * 10;
+        //        //}
+        //        //if (ysdata[11, n] >= 0 && ysdata[11, n] < 10000)
+        //        //{
+        //        //    ysdata[11, n] = ysdata[11, n] * 10;
+        //        //}
+
+        //        //if (ysdata[2, n] >= 10000 && ysdata[2, n] < 20000)
+        //        //{
+        //        //    ysdata[2, n] = (ysdata[2, n] - 10000) * 10;
+        //        //}
+        //        //if (ysdata[5, n] >= 10000 && ysdata[5, n] < 20000)
+        //        //{
+        //        //    ysdata[5, n] = (ysdata[5, n] - 10000) * 10;
+        //        //}
+        //        //if (ysdata[8, n] >= 10000 && ysdata[8, n] < 20000)
+        //        //{
+        //        //    ysdata[8, n] = (ysdata[8, n] - 10000) * 10;
+        //        //}
+        //        //if (ysdata[11, n] >= 10000 && ysdata[11, n] < 20000)
+        //        //{
+        //        //    ysdata[11, n] = (ysdata[11, n] - 10000) * 10;
+        //        //}
+
+        //        //if (ysdata[2, n] >= 20000 && ysdata[2, n] < 30000)
+        //        //{
+        //        //    ysdata[2, n] = (ysdata[2, n] - 20000) * 10;
+        //        //}
+        //        //if (ysdata[5, n] >= 20000 && ysdata[5, n] < 30000)
+        //        //{
+        //        //    ysdata[5, n] = (ysdata[5, n] - 20000) * 10;
+        //        //}
+        //        //if (ysdata[8, n] >= 20000 && ysdata[8, n] < 30000)
+        //        //{
+        //        //    ysdata[8, n] = (ysdata[8, n] - 20000) * 10;
+        //        //}
+        //        //if (ysdata[11, n] >= 20000 && ysdata[11, n] < 30000)
+        //        //{
+        //        //    ysdata[11, n] = (ysdata[11, n] - 20000) * 10;
+        //        //}
+
+
+        //        //if (tiligaodu >= 1000 && tiligaodu < 1800)
+        //        //{
+        //        //    tiligaodu1 = 150;
+        //        //}
+        //        //if (tiligaodu >= 1800 && tiligaodu < 2500)
+        //        //{
+        //        //    tiligaodu1 = 200;
+        //        //}
+        //        //if (tiligaodu >= 2500 && tiligaodu < 3000)
+        //        //{
+        //        //    tiligaodu1 = 250;
+        //        //}
+        //        //if(tiligaodu1==150)
+        //        //{
+        //        //    if (ysdata[2, n] > 30000 && ysdata[2, n] < 50000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 30000 && ysdata[5, n] < 50000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 30000 && ysdata[8, n] < 50000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 30000 && ysdata[11, n] < 50000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 20000;
+        //        //    }
+
+        //        //    if (ysdata[2, n] > 40000 && ysdata[2, n] < 60000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 30000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 40000 && ysdata[5, n] < 60000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 30000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 40000 && ysdata[8, n] < 60000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 30000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 40000 && ysdata[11, n] < 60000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 30000;
+        //        //    }
+
+        //        //    if (ysdata[2, n] > 60000 && ysdata[2, n] < 80000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 50000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 60000 && ysdata[5, n] < 80000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 50000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 60000 && ysdata[8, n] < 80000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 50000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 60000 && ysdata[11, n] < 80000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 50000;
+        //        //    }
+
+        //        //    if (ysdata[2, n] > 80000 && ysdata[2, n] < 100000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 70000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 80000 && ysdata[5, n] < 100000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 70000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 80000 && ysdata[8, n] < 100000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 70000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 80000 && ysdata[11, n] < 100000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 70000;
+        //        //    }
+        //        //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1))*20000) + 10000;
+        //        //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 10000;
+        //        //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 10000;
+        //        //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 10000;
+        //        //}
+        //        //if(tiligaodu1==200)
+        //        //{
+        //        //    if (ysdata[2, n] > 40000 && ysdata[2, n] < 60000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 40000 && ysdata[5, n] < 60000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 40000 && ysdata[8, n] < 60000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 40000 && ysdata[11, n] < 60000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 20000;
+        //        //    }
+
+        //        //    if (ysdata[2, n] > 0 && ysdata[2, n] < 20000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 0 && ysdata[5, n] < 20000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 0 && ysdata[8, n] < 20000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 0 && ysdata[11, n] < 20000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] + 20000;
+        //        //    }
+        //        //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1)) * 20000) + 20000;
+        //        //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 20000;
+        //        //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 20000;
+        //        //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 20000;
+        //        //}
+        //        //if(tiligaodu1==250)
+        //        //{
+        //        //    if (ysdata[2, n] > 45000 && ysdata[2, n] < 65000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 45000 && ysdata[5, n] < 65000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 45000 && ysdata[8, n] < 65000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] - 20000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 45000 && ysdata[11, n] < 65000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] - 20000;
+        //        //    }
+
+        //        //    if (ysdata[2, n] > 500 && ysdata[2, n] < 25000)
+        //        //    {
+        //        //        ysdata[2, n] = ysdata[2, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[5, n] > 500 && ysdata[5, n] < 25000)
+        //        //    {
+        //        //        ysdata[5, n] = ysdata[5, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[8, n] > 500 && ysdata[8, n] < 25000)
+        //        //    {
+        //        //        ysdata[8, n] = ysdata[8, n] + 20000;
+        //        //    }
+        //        //    if (ysdata[11, n] > 500 && ysdata[11, n] < 25000)
+        //        //    {
+        //        //        ysdata[11, n] = ysdata[11, n] + 20000;
+        //        //    }
+        //        //    //ysdata[2, n] = (((ysdata[2, n] - min1) / (max1 - min1)) * 20000) + 25000;
+        //        //    //ysdata[5, n] = (((ysdata[5, n] - min2) / (max2 - min2)) * 20000) + 25000;
+        //        //    //ysdata[8, n] = (((ysdata[8, n] - min3) / (max3 - min3)) * 20000) + 25000;
+        //        //    //ysdata[11, n] = (((ysdata[11, n] - min4) / (max4 - min4)) * 20000) + 25000;
+        //        //}
+
+        //        up1 = ((max1 / 1000) + 1) * 1000;
+        //        down1 = ((min1 / 1000) - 1) * 1000;
+        //        value1 = (((ysdata[2, n] - down1) / (up1 - down1)) * 10000) + 10000;
+
+        //        up2 = ((max2 / 1000) + 1) * 1000;
+        //        down2 = ((min2 / 1000) - 1) * 1000;
+        //        value2 = (((ysdata[5, n] - down2) / (up2 - down2)) * 10000) + 10000;
+
+        //        up3 = ((max3 / 1000) + 1) * 1000;
+        //        down3 = ((min3 / 1000) - 1) * 1000;
+        //        value3 = (((ysdata[8, n] - down3) / (up3 - down3)) * 10000) + 10000;
+
+        //        up4 = ((max4 / 1000) + 1) * 1000;
+        //        down4 = ((min4 / 1000) - 1) * 1000;
+        //        value4 = (((ysdata[11, n] - down4) / (up4 - down4)) * 10000) + 10000;
+
+        //        //if(ysdata[2,n]>=10000&&ysdata[2,n]<30000)
+        //        //{
+        //        //    value1=(((ysdata[2,n]-10000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[5,n]>=10000&&ysdata[5,n]<30000)
+        //        //{
+        //        //    value2=(((ysdata[5,n]-10000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[8,n]>=10000&&ysdata[8,n]<30000)
+        //        //{
+        //        //    value3=(((ysdata[8,n]-10000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[11,n]>=10000&&ysdata[11,n]<30000)
+        //        //{
+        //        //    value4=(((ysdata[11,n]-10000)/20000)*10000)+10000;
+        //        //}
+
+        //        //if(ysdata[2,n]>=20000&&ysdata[2,n]<40000)
+        //        //{
+        //        //    value1=(((ysdata[2,n]-20000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[5,n]>=20000&&ysdata[5,n]<40000)
+        //        //{
+        //        //    value2=(((ysdata[5,n]-20000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[8,n]>=20000&&ysdata[8,n]<40000)
+        //        //{
+        //        //    value3=(((ysdata[8,n]-20000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[11,n]>=20000&&ysdata[11,n]<40000)
+        //        //{
+        //        //    value4=(((ysdata[11,n]-20000)/20000)*10000)+10000;
+        //        //}
+
+        //        //if(ysdata[2,n]>=30000&&ysdata[2,n]<50000)
+        //        //{
+        //        //    value1=(((ysdata[2,n]-30000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[5,n]>=30000&&ysdata[5,n]<50000)
+        //        //{
+        //        //    value2=(((ysdata[5,n]-30000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[8,n]>=30000&&ysdata[8,n]<50000)
+        //        //{
+        //        //    value3=(((ysdata[8,n]-30000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[11,n]>=30000&&ysdata[11,n]<50000)
+        //        //{
+        //        //    value4=(((ysdata[11,n]-30000)/20000)*10000)+10000;
+        //        //}
+
+        //        //if(ysdata[2,n]>=40000&&ysdata[2,n]<60000)
+        //        //{
+        //        //    value1=(((ysdata[2,n]-40000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[5,n]>=40000&&ysdata[5,n]<60000)
+        //        //{
+        //        //    value2=(((ysdata[5,n]-40000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[8,n]>=40000&&ysdata[8,n]<60000)
+        //        //{
+        //        //    value3=(((ysdata[8,n]-40000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[11,n]>=40000&&ysdata[11,n]<60000)
+        //        //{
+        //        //    value4=(((ysdata[11,n]-40000)/20000)*10000)+10000;
+        //        //}
+
+        //        //if(ysdata[2,n]>=50000&&ysdata[2,n]<70000)
+        //        //{
+        //        //    value1=(((ysdata[2,n]-50000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[5,n]>=50000&&ysdata[5,n]<70000)
+        //        //{
+        //        //    value2=(((ysdata[5,n]-50000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[8,n]>=50000&&ysdata[8,n]<70000)
+        //        //{
+        //        //    value3=(((ysdata[8,n]-50000)/20000)*10000)+10000;
+        //        //}
+        //        //if(ysdata[11,n]>=50000&&ysdata[11,n]<70000)
+        //        //{
+        //        //    value4=(((ysdata[11,n]-50000)/20000)*10000)+10000;
+        //        //}
+
+
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_1 = sum_1 + Dydata2[2, j];
+        //        }
+        //        mean_1 = sum_1 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
+        //        }
+        //        biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_3 = sum_3 + Dydata2[8, j];
+        //        }
+        //        mean_3 = sum_3 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
+        //        }
+        //        biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
+        //        }
+
+
+
+
+
+        //        //F1 = Math.Pow(150, 2) / value1;
+        //        //F2 = Math.Pow(150, 2) / value2;
+        //        //F3 = Math.Pow(150, 2) / value3;
+        //        //F4 = Math.Pow(150, 2) / value4;
+        //        if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
+        //        {
+        //            cz = 0;
+
+        //        }
+        //        if (bdxstext1_2.Text == "")
+        //        {
+        //            double fushi_canshu_a = 0;
+        //            double fushi_canshu_b = 0;
+
+        //            int TLBox1 = Int32.Parse(TLBox_2.Text);
+        //            if (tiligaodu >= 0 && tiligaodu < 250)
+        //            {
+        //                fushi_canshu_a = 9.45E+01;
+        //                fushi_canshu_b = -1.346;
+
+        //            }
+        //            if (tiligaodu >= 250 && tiligaodu < 480)
+        //            {
+        //                fushi_canshu_a = 120.6;
+        //                fushi_canshu_b = -1.385;
+        //            }
+        //            if (tiligaodu >= 480 && tiligaodu < 700)
+        //            {
+        //                fushi_canshu_a = 61.12;
+        //                fushi_canshu_b = -1.027;
+        //            }
+        //            if (tiligaodu >= 700 && tiligaodu < 970)
+        //            {
+        //                fushi_canshu_a = 260.2;
+        //                fushi_canshu_b = -1.5;
+        //            }
+        //            if (tiligaodu >= 970 && tiligaodu < 1100)
+        //            {
+        //                fushi_canshu_a = 46.3;
+        //                fushi_canshu_b = -1.054;
+        //            }
+        //            if (tiligaodu >= 1100 && tiligaodu < 1350)
+        //            {
+        //                fushi_canshu_a = 1.05E+06;
+        //                fushi_canshu_b = -9.415;
+        //            }
+        //            if (tiligaodu >= 1350 && tiligaodu < 1620)
+        //            {
+        //                fushi_canshu_a = 10.5;
+        //                fushi_canshu_b = -1.584;
+        //            }
+        //            if (tiligaodu >= 1620 && tiligaodu < 1860)
+        //            {
+        //                fushi_canshu_a = 784.8;
+        //                fushi_canshu_b = -3.046;
+        //            }
+        //            if (tiligaodu > 1860)
+        //            {
+        //                fushi_canshu_a = 28.22;
+        //                fushi_canshu_b = -1.784;
+        //            }
+        //            //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //            // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
+        //            cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * ysdata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //            }
+
+
+        //        }
+
+        //        else
+        //        {
+        //            double huiguixishu11 = Convert.ToDouble(huiguixishu1_2);
+        //            double huiguixishu22 = Convert.ToDouble(huiguixishu2_2);
+
+        //            cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if (cz == 0)
+        //            {
+        //                cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
+        //            }
+
+        //            if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
+        //        }
+
+
+
+
+
+
+
+
+
+        //        //else
+        //        //{
+        //        //    cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //        //    if (cz > ThickOftube)
+        //        //    {
+        //        //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    }
+        //        //    //if(tiligaodu1 == 150)
+        //        //    //{
+        //        //    //    cz = (40 * Math.Exp(-1.5* F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //        //    //}
+        //        //    //if (tiligaodu1 == 200)
+        //        //    //{
+        //        //    //    cz = (0.6* Math.Exp(1.5 * F1) + 0.6 * Math.Exp(1.5 * F2) + 0.6 * Math.Exp(1.5 * F3) + 0.6 * Math.Exp(1.5 * F4)) / 4;
+        //        //    //}
+        //        //    //if (tiligaodu1 == 250)
+        //        //    //{
+        //        //    //    cz = (0.4 * Math.Exp(1.5 * F1) + 0.4 * Math.Exp(1.5 * F2) + 0.4 * Math.Exp(1.5 * F3) + 0.4 * Math.Exp(1.5 * F4)) / 4;
+        //        //    //}
+        //        //    //if (cz > ThickOftube)
+        //        //    //{
+        //        //    //    //cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    //    ysdata[2, n] = ysdata[2, n] + 10000;
+        //        //    //    ysdata[5, n] = ysdata[5, n] + 10000;
+        //        //    //    ysdata[8, n] = ysdata[8, n] + 10000;
+        //        //    //    ysdata[11, n] = ysdata[11, n] + 10000;
+
+        //        //    //    F1 = Math.Pow(tiligaodu1, 2) / ysdata[2, n];
+        //        //    //    F2 = Math.Pow(tiligaodu1, 2) / ysdata[5, n];
+        //        //    //    F3 = Math.Pow(tiligaodu1, 2) / ysdata[8, n];
+        //        //    //    F4 = Math.Pow(tiligaodu1, 2) / ysdata[11, n];
+
+        //        //    //    if (tiligaodu1 == 150)
+        //        //    //    {
+        //        //    //        cz = (1.2 * Math.Exp(1.5 * F1) + 1.2 * Math.Exp(1.5 * F2) + 1.2 * Math.Exp(1.5 * F3) + 1.2 * Math.Exp(1.5 * F4)) / 4;
+        //        //    //    }
+        //        //    //    if (tiligaodu1 == 200)
+        //        //    //    {
+        //        //    //        cz = (0.6 * Math.Exp(1.5 * F1) + 0.6 * Math.Exp(1.5 * F2) + 0.6 * Math.Exp(1.5 * F3) + 0.6 * Math.Exp(1.5 * F4)) / 4;
+        //        //    //    }
+        //        //    //    if (tiligaodu1 == 250)
+        //        //    //    {
+        //        //    //        cz = (0.4 * Math.Exp(1.5 * F1) + 0.4 * Math.Exp(1.5 * F2) + 0.4 * Math.Exp(1.5 * F3) + 0.4 * Math.Exp(1.5 * F4)) / 4;
+        //        //    //    }
+        //        //    //    if (cz > ThickOftube)
+        //        //    //    {
+        //        //    //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    //    }
+        //        //    //}
+        //        //}
+        //        //else 
+        //        //{
+        //        //    if ((D <= 100) && (D > 0))
+        //        //    {
+        //        //        cz = (2.182 * 0.00000001 * Math.Exp(3.009 * F1) + 1.92 * 0.00000001 * Math.Exp(3.014 * F2) + 0.9927 * 0.00000001 * Math.Exp(3.132 * F3) + 2.978 * 0.00000001 * Math.Exp(3.017 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 100) && (D <= 200))
+        //        //    {
+        //        //        cz = (3.826 * Math.Pow(10, -5) * Math.Exp(1.762 * F1) + 4.291 * Math.Pow(10, -5) * Math.Exp(1.735 * F2) + 3.799 * Math.Pow(10, -5) * Math.Exp(1.767 * F3) + 3.505 * Math.Pow(10, -5) * Math.Exp(1.809 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 200) && (D <= 300))
+        //        //    {
+        //        //        cz = (1.04 * Math.Pow(10, -7) * Math.Exp(3.039 * F1) + 0.9371 * Math.Pow(10, -7) * Math.Exp(3.044 * F2) + 1.083 * Math.Pow(10, -7) * Math.Exp(3.04 * F3) + 1.239 * Math.Pow(10, -7) * Math.Exp(3.067 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 300) && (D <= 400))
+        //        //    {
+        //        //        cz = (7.303 * Math.Pow(10, 4) * Math.Exp(-1.941 * F1) + 7.271 * Math.Pow(10, 4) * Math.Exp(-1.932 * F2) + 7.417 * Math.Pow(10, 4) * Math.Exp(-1.948 * F3) + 7.482 * Math.Pow(10, 4) * Math.Exp(-1.982 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 400) && (D <= 500))
+        //        //    {
+        //        //        cz = (8.494 * Math.Pow(10, 31) * Math.Exp(-10.56 * F1) + 3.215 * Math.Pow(10, 30) * Math.Exp(-10.06 * F2) + 1.375 * Math.Pow(10, 32) * Math.Exp(-10.68 * F3) + 6.185 * Math.Pow(10, 33) * Math.Exp(-11.41 * F4)) / 4;
+        //        //    }
+        //        //    if (D > 500)
+        //        //    {
+        //        //        cz = (1.03 * Math.Pow(10, 21) * Math.Exp(-4.3 * F1) + 5.897 * Math.Pow(10, 20) * Math.Exp(-4.241 * F2) + 1.019 * Math.Pow(10, 21) * Math.Exp(-4.317 * F3) + 2.076 * Math.Pow(10, 21) * Math.Exp(-4.44 * F4)) / 4;
+        //        //    }
+        //        //    if (cz > ThickOftube)
+        //        //    {
+        //        //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    }
+
+        //        //}
+        //        //else
+        //        //{
+        //        //    if ((D <= 100) && (D > 0))
+        //        //    {
+        //        //        cz = (2.468 * Math.Exp(0.8385 * F1) + 2.062 * Math.Exp(1.111 * F2) + 2.113 * Math.Exp(1.079 * F3) + 2.588 * Math.Exp(0.7795 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 100) && (D <= 200))
+        //        //    {
+        //        //        cz = (3.515 * Math.Exp(1.97 * F1) + 3.289 * Math.Exp(1.97 * F2) + 3.401 * Math.Exp(1.98 * F3) + 3.499 * Math.Exp(2.07 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 200) && (D <= 300))
+        //        //    {
+        //        //        cz = (1.904 * Math.Exp(3.042 * F1) + 2.177 * Math.Exp(3.013 * F2) + 1.818 * Math.Exp(3.057 * F3) + 1.514 * Math.Exp(3.132 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 300) && (D <= 400))
+        //        //    {
+        //        //        cz = (4.457 * Math.Exp(1.715 * F1) + 4.64 * Math.Exp(1.714 * F2) + 4.605 * Math.Exp(1.723 * F3) + 4.439 * Math.Exp(1.745 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 400) && (D <= 500))
+        //        //    {
+        //        //        cz = (4.4663 * Math.Exp(2.509 * F1) + 1.952 * Math.Exp(2.37 * F2) + 7.502 * Math.Exp(2.593 * F3) + 2.372 * Math.Exp(2.813 * F4)) / 4;
+        //        //    }
+        //        //    if (D > 500)
+        //        //    {
+        //        //        cz = (1.188 * Math.Exp(3.4 * F1) + 2.677 * Math.Exp(3.2 * F2) + 1.54 * Math.Exp(3.4 * F3) + 1.38 * Math.Exp(3.8 * F4)) / 4;
+        //        //    }
+        //        //    if (cz > ThickOftube)
+        //        //    {
+        //        //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    }
+        //        //}
+
+        //        gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
+        //        gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
+
+        //        ZtextBox_2.Text = string.Format("{0:0.00}", cz) + "mm";
+
+        //        ////计算区域面积
+        //        if (cishu == 4)
+        //        {
+        //            double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
+        //            double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
+        //            double area = bianchang * kuandu / 100;    //面积(平方厘米)
+        //            MjtextBox_2.Text = string.Format("{0:0.0}", area) + "cm²";
+        //            //MjtextBox_2.Text = Convert .ToString (area);
+        //        }
+        //        /////
+        //    }
+        //    else
+        //    {
+        //        Graphics gg = e.Graphics;
+        //        cx = (currentPoint.X - x) * lenofpiece / width;
+        //        cy = (pic_2.Height - currentPoint.Y - 0.075 * pic_2.Height) * widthOfPiece / height;
+
+        //        n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
+        //        C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
+        //        F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
+        //        //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
+        //        //max1 = Dydata2[2, 0];
+        //        //min1 = Dydata2[2, 0];
+        //        //max2 = Dydata2[5, 0];
+        //        //min2 = Dydata2[5, 0];
+        //        //max3 = Dydata2[8, 0];
+        //        //min3 = Dydata2[8, 0];
+        //        //max4 = Dydata2[11, 0];
+        //        //min4 = Dydata2[11, 0];
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max1 < Dydata2[2, i + 1])
+        //        //    {
+        //        //        max1 = Dydata2[2, i + 1];
+        //        //    }
+        //        //    if (min1 > Dydata2[2, i + 1])
+        //        //    {
+        //        //        min1 = Dydata2[2, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max2 < Dydata2[5, i + 1])
+        //        //    {
+        //        //        max2 = Dydata2[5, i + 1];
+        //        //    }
+        //        //    if (min2 > Dydata2[5, i + 1])
+        //        //    {
+        //        //        min2 = Dydata2[5, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max3 < Dydata2[8, i + 1])
+        //        //    {
+        //        //        max3 = Dydata2[8, i + 1];
+        //        //    }
+        //        //    if (min3 > Dydata2[8, i + 1])
+        //        //    {
+        //        //        min3 = Dydata2[8, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max4 < Dydata2[11, i + 1])
+        //        //    {
+        //        //        max4 = Dydata2[11, i + 1];
+        //        //    }
+        //        //    if (min4 > Dydata2[11, i + 1])
+        //        //    {
+        //        //        min4 = Dydata2[11, i + 1];
+        //        //    }
+        //        //}
+
+        //        //up1 = ((max1 / 1000) + 1) * 1000;
+        //        //down1 = ((min1 / 1000) - 1) * 1000;
+        //        //value1 = (((Dydata2[2, n] - down1) / (up1 - down1)) * 10000) + 10000;
+
+        //        //up2 = ((max2 / 1000) + 1) * 1000;
+        //        //down2 = ((min2 / 1000) - 1) * 1000;
+        //        //value2 = (((Dydata2[5, n] - down2) / (up2 - down2)) * 10000) + 10000;
+
+        //        //up3 = ((max3 / 1000) + 1) * 1000;
+        //        //down3 = ((min3 / 1000) - 1) * 1000;
+        //        //value3 = (((Dydata2[8, n] - down3) / (up3 - down3)) * 10000) + 10000;
+
+        //        //up4 = ((max4 / 1000) + 1) * 1000;
+        //        //down4 = ((min4 / 1000) - 1) * 1000;
+        //        //value4 = (((Dydata2[11, n] - down4) / (up4 - down4)) * 10000) + 10000;
+
+        //        //F1 = Math.Pow(150, 2) / value1;
+        //        //F2 = Math.Pow(150, 2) / value2;
+        //        //F3 = Math.Pow(150, 2) / value3;
+        //        //F4 = Math.Pow(150, 2) / value4;
+
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_1 = sum_1 + Dydata2[2, j];
+        //        }
+        //        mean_1 = sum_1 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
+        //        }
+        //        biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_3 = sum_3 + Dydata2[8, j];
+        //        }
+        //        mean_3 = sum_3 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
+        //        }
+        //        biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
+        //        }
+        //        ////////////////////////////////////////////
+        //        if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
+        //        {
+        //            cz = 0;
+        //        }
+        //        if (bdxstext1_2.Text == "")
+        //        {
+        //            double fushi_canshu_a = 0;
+        //            double fushi_canshu_b = 0;
+
+        //            int TLBox1 = Int32.Parse(TLBox_2.Text);
+        //            if (tiligaodu >= 0 && tiligaodu < 250)
+        //            {
+        //                fushi_canshu_a = 9.45E+01;
+        //                fushi_canshu_b = -1.346;
+
+        //            }
+        //            if (tiligaodu >= 250 && tiligaodu < 480)
+        //            {
+        //                fushi_canshu_a = 120.6;
+        //                fushi_canshu_b = -1.385;
+        //            }
+        //            if (tiligaodu >= 480 && tiligaodu < 700)
+        //            {
+        //                fushi_canshu_a = 61.12;
+        //                fushi_canshu_b = -1.027;
+        //            }
+        //            if (tiligaodu >= 700 && tiligaodu < 970)
+        //            {
+        //                fushi_canshu_a = 260.2;
+        //                fushi_canshu_b = -1.5;
+        //            }
+        //            if (tiligaodu >= 970 && tiligaodu < 1100)
+        //            {
+        //                fushi_canshu_a = 46.3;
+        //                fushi_canshu_b = -1.054;
+        //            }
+        //            if (tiligaodu >= 1100 && tiligaodu < 1350)
+        //            {
+        //                fushi_canshu_a = 1.05E+06;
+        //                fushi_canshu_b = -9.415;
+        //            }
+        //            if (tiligaodu >= 1350 && tiligaodu < 1620)
+        //            {
+        //                fushi_canshu_a = 10.5;
+        //                fushi_canshu_b = -1.584;
+        //            }
+        //            if (tiligaodu >= 1620 && tiligaodu < 1860)
+        //            {
+        //                fushi_canshu_a = 784.8;
+        //                fushi_canshu_b = -3.046;
+        //            }
+        //            if (tiligaodu > 1860)
+        //            {
+        //                fushi_canshu_a = 28.22;
+        //                fushi_canshu_b = -1.784;
+        //            }
+        //            //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //            // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
+        //            cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * Dydata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if ((Freaddata[0, n] == 0) && (Freaddata[1, n] == 0) && (Freaddata[2, n] == 0) && (Freaddata[3, n] == 0) && (Freaddata[4, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
+
+
+        //            else
+        //            {
+        //                cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //                if (cz > ThickOftube)
+        //                {
+        //                    cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //                }
+        //            }
+
+        //            gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
+        //            gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
+
+        //            ZtextBox_2.Text = string.Format("{0:0.00}", cz) + "mm";
+
+        //            ////计算区域面积
+        //            if (cishu == 4)
+        //            {
+        //                double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
+        //                double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
+        //                double area = bianchang * kuandu / 100;    //面积(平方厘米)
+        //                MjtextBox_2.Text = string.Format("{0:0.0}", area) + "cm²";
+        //                //MjtextBox_2.Text = Convert .ToString (area);
+        //            }
+        //        }
+        //    }
+        //}
 
         //private void WcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         //{
@@ -5242,14 +5234,11 @@ namespace theHostComputer
                 zedGraphControl2_2.Size = new System.Drawing.Size(661, 169);
                 zedGraphControl3_2.Location = new Point(92, 174);
                 zedGraphControl3_2.Size = new System.Drawing.Size(661, 169);
-
-
             }
             if (tabControl_2.SelectedTab.Name == "tabPage1_2")
             {
                 panel1_2.Visible = true;
                 tabControl_2.Height = 401;
-                
             }
         }
 
@@ -5301,11 +5290,6 @@ namespace theHostComputer
         }
 
         private void zedGraphControl1_2_Load(object sender, EventArgs e)
-        {
-
-        }
-
-        private void tabPage2_2_Click(object sender, EventArgs e)
         {
 
         }

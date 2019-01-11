@@ -68,25 +68,25 @@ namespace theHostComputer
 
         private int delete_points_flag = 0;
         private int defect_recognition_2_flag = 2;
-        //private int[,] curve_display_location = new int[4, 10000];
-        private int[,] chafen_delete_location = new int[4, 10000];
-        private double[,] curve_display_X = new double[4, 10000];                //curve_display_X由通过新3西格玛算法提取出的缺陷信号构成
-        private double[,] curve_display_Y = new double[4, 10000];
-        private double[,] curve_display_Z = new double[4, 10000];                //curve_display_Z由通过新3西格玛算法提取出的缺陷信号构成
-        private double[,] defect_X = new double[4, 10000];                       //defect_X数组是将用新3西格玛算法找到的缺陷进行组合，判断两个缺陷间距小于等于200mm的组合为一个缺陷
-        private double[,] defect_Y = new double[4, 10000];
-        private double[,] defect_Z = new double[4, 10000];                       //defect_Z数组是将用新3西格玛算法找到的缺陷进行组合，判断两个缺陷间距小于等于200mm的组合为一个缺陷
-        private double[,] pic_2_imagination = new double[4, 10000];
-        private double[,] pic_2_imagination_another = new double[4, 10000];
-        //private double[,] reconstruction_data_display = new double[4, 10000];
-        //private double[,] reconstruction_data = new double[4, 10000];
-        private double[] reconstruction_data_display = new double[10000];
-        private double[,] reconstruction_data = new double[4, 10000];
-        //private double[] final_display = new double[10000];
-        private double[,] final_imagination = new double[8, 10000];
-        private double[,] original_signal = new double[12, 10000];
-        private double[,] original_signal_chafen = new double[12, 10000];
-        private double[,] original_signal_chafen2 = new double[12, 10000];
+        //private int[,] curve_display_location = new int[4, 100000];
+        private int[,] chafen_delete_location = new int[4, 100000];
+        private double[,] curve_display_X = new double[4, 100000];                //curve_display_X由通过新3西格玛算法提取出的缺陷信号构成
+        private double[,] curve_display_Y = new double[4, 100000];
+        private double[,] curve_display_Z = new double[4, 100000];                //curve_display_Z由通过新3西格玛算法提取出的缺陷信号构成
+        private double[,] defect_X = new double[4, 100000];                       //defect_X数组是将用新3西格玛算法找到的缺陷进行组合，判断两个缺陷间距小于等于200mm的组合为一个缺陷
+        private double[,] defect_Y = new double[4, 100000];
+        private double[,] defect_Z = new double[4, 100000];                       //defect_Z数组是将用新3西格玛算法找到的缺陷进行组合，判断两个缺陷间距小于等于200mm的组合为一个缺陷
+        private double[,] pic_2_imagination = new double[4, 100000];
+        private double[,] pic_2_imagination_another = new double[4, 100000];
+        //private double[,] reconstruction_data_display = new double[4, 100000];
+        //private double[,] reconstruction_data = new double[4, 100000];
+        private double[] reconstruction_data_display = new double[100000];
+        private double[,] reconstruction_data = new double[4, 100000];
+        //private double[] final_display = new double[100000];
+        private double[,] final_imagination = new double[8, 100000];
+        private double[,] original_signal = new double[12, 100000];
+        private double[,] original_signal_chafen = new double[12, 100000];
+        private double[,] original_signal_chafen2 = new double[12, 100000];
 
         private double[] original_signal_chafen2_sigma = new double[12];
         private double[] original_signal_chafen2_sum = new double[12];
@@ -95,8 +95,8 @@ namespace theHostComputer
         private double[] original_signal_chafen2_max = new double[12];
         private double[] original_signal_chafen2_min = new double[12];
 
-        private double[,] original_signal_zuocha = new double[1, 10000];
-        private double[,] original_signal_chafenzuocha = new double[1, 10000];
+        private double[,] original_signal_zuocha = new double[1, 100000];
+        private double[,] original_signal_chafenzuocha = new double[1, 100000];
         //private double[,] original_signal_1 = new double[4, 100000];
 
         /// </summary>
@@ -1275,9 +1275,9 @@ namespace theHostComputer
             /////
             tiligaodu = Convert.ToDouble(TLBox.Text);  //读取提离高度
             widthOfPiece = Math.PI * Convert.ToDouble(DText.Text);     //管道的周长
-            double[,] orignal_chafen = new double[4, 10000];         //原始信号的差分值
-            double[,] delete_feedback = new double[4, 10000];
-            double[,] delete_points = new double[4, 10000];           //第一次删点结果
+            double[,] orignal_chafen = new double[4, 100000];         //原始信号的差分值
+            double[,] delete_feedback = new double[4, 100000];
+            double[,] delete_points = new double[4, 100000];           //第一次删点结果
             long[] delete_points_capacity = new long[4];
             long[] orignal_chafen_capacity = new long[4];
             defect_recognition_2_flag = 2;
@@ -1353,7 +1353,7 @@ namespace theHostComputer
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        for (int j = 0; j < 10000; j++)
+                        for (int j = 0; j < 100000; j++)
                         {
                             if (delete_feedback[i, j] != -10000000000000)
                             {
@@ -1383,7 +1383,7 @@ namespace theHostComputer
                 //{
                 //    for (int i = 0; i < 4; i++)
                 //    {
-                //        for (int j = 0; j < 10000; j++)
+                //        for (int j = 0; j < 100000; j++)
                 //        {
                 //            if (delete_feedback[i, j] != -10000000000000)
                 //            {
@@ -1412,7 +1412,7 @@ namespace theHostComputer
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        for (int j = 0; j < 10000; j++)
+                        for (int j = 0; j < 100000; j++)
                         {
                             if (delete_feedback[i, j] != -10000000000000)
                             {
@@ -1478,7 +1478,7 @@ namespace theHostComputer
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        for (int j = 0; j < 10000; j++)
+                        for (int j = 0; j < 100000; j++)
                         {
                             if (delete_feedback[i, j] == -10000000000000)
                             {
@@ -1508,7 +1508,7 @@ namespace theHostComputer
                 //{
                 //    for (int i = 0; i < 4; i++)
                 //    {
-                //        for (int j = 0; j < 10000; j++)
+                //        for (int j = 0; j < 100000; j++)
                 //        {
                 //            if (delete_feedback[i, j] != -10000000000000)
                 //            {
@@ -1537,7 +1537,7 @@ namespace theHostComputer
                 {
                     for (int i = 0; i < 4; i++)
                     {
-                        for (int j = 0; j < 10000; j++)
+                        for (int j = 0; j < 100000; j++)
                         {
                             if (delete_feedback[i, j] == -10000000000000)
                             {
@@ -2518,25 +2518,25 @@ namespace theHostComputer
         /********************************************************************** 2016.4.10 添加加步行缺陷提取算法*************************************************************/
         private double[,] delete_points_function_first_X(double[,] chafen_orignal, double[,] chafen, long[] num)//对差分完的X方向信号进行第一次三西格玛删点计算
         {
-            //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+            //double[,] chafen = new double[4, 100000];         //原始信号的差分值
             double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
             double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
             double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
             double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
             double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
             double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-            double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-            //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-            long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-            //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+            double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+            //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+            long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+            //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
             int[] point_jizhi_capacity = new int[4];
             //int[] point_jixiaozhi_capacity = new int[4];
-            long[,] chafen_location = new long[4, 10000];
+            long[,] chafen_location = new long[4, 100000];
             //int[] chafen_location_capacity = new int[4];
-            double[,] chafen_reconstruct = new double[4, 10000];
+            double[,] chafen_reconstruct = new double[4, 100000];
             int[] chafen_reconstruct_capacity = new int[4];
-            //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-            //double[,] curve_display_location = new double[4, 10000];
+            //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+            //double[,] curve_display_location = new double[4, 100000];
 
             //for (int i = 0; i < 4; i++)
             //{
@@ -2708,25 +2708,25 @@ namespace theHostComputer
         }
         private double[,] delete_points_function_again_X(double[,] chafen_orignal, double[,] chafen, long[] num)//对X方向的数据再第一次三西格玛删点后再次用三西格玛判断删点函数
         {
-            //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+            //double[,] chafen = new double[4, 100000];         //原始信号的差分值
             double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
             double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
             double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
             double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
             double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
             double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-            double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-            //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-            long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-            //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+            double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+            //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+            long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+            //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
             int[] point_jizhi_capacity = new int[4];
             //int[] point_jixiaozhi_capacity = new int[4];
-            long[,] chafen_location = new long[4, 10000];
+            long[,] chafen_location = new long[4, 100000];
             //int[] chafen_location_capacity = new int[4];
-            double[,] chafen_reconstruct = new double[4, 10000];
+            double[,] chafen_reconstruct = new double[4, 100000];
             int[] chafen_reconstruct_capacity = new int[4];
-            //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-            // double[,] curve_display_location = new double[4, 10000];
+            //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+            // double[,] curve_display_location = new double[4, 100000];
 
             //for (int i = 0; i < 4; i++)
             //{
@@ -2909,25 +2909,25 @@ namespace theHostComputer
 
         //private double[,] delete_points_function_first_Y(double[,] chafen_orignal, double[,] chafen, long[] num)//对差分完的X方向信号进行第一次三西格玛删点计算
         //{
-        //    //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+        //    //double[,] chafen = new double[4, 100000];         //原始信号的差分值
         //    double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
         //    double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
         //    double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
         //    double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
         //    double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
         //    double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-        //    double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-        //    //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-        //    long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-        //    //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+        //    double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+        //    //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+        //    long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+        //    //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
         //    int[] point_jizhi_capacity = new int[4];
         //    //int[] point_jixiaozhi_capacity = new int[4];
-        //    long[,] chafen_location = new long[4, 10000];
+        //    long[,] chafen_location = new long[4, 100000];
         //    //int[] chafen_location_capacity = new int[4];
-        //    double[,] chafen_reconstruct = new double[4, 10000];
+        //    double[,] chafen_reconstruct = new double[4, 100000];
         //    int[] chafen_reconstruct_capacity = new int[4];
-        //    //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-        //    //double[,] curve_display_location = new double[4, 10000];
+        //    //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+        //    //double[,] curve_display_location = new double[4, 100000];
 
         //    //for (int i = 0; i < 4; i++)
         //    //{
@@ -3096,25 +3096,25 @@ namespace theHostComputer
         //}
         //private double[,] delete_points_function_again_Y(double[,] chafen_orignal, double[,] chafen, long[] num)//对X方向的数据再第一次三西格玛删点后再次用三西格玛判断删点函数
         //{
-        //    //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+        //    //double[,] chafen = new double[4, 100000];         //原始信号的差分值
         //    double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
         //    double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
         //    double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
         //    double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
         //    double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
         //    double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-        //    double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-        //    //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-        //    long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-        //    //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+        //    double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+        //    //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+        //    long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+        //    //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
         //    int[] point_jizhi_capacity = new int[4];
         //    //int[] point_jixiaozhi_capacity = new int[4];
-        //    long[,] chafen_location = new long[4, 10000];
+        //    long[,] chafen_location = new long[4, 100000];
         //    //int[] chafen_location_capacity = new int[4];
-        //    double[,] chafen_reconstruct = new double[4, 10000];
+        //    double[,] chafen_reconstruct = new double[4, 100000];
         //    int[] chafen_reconstruct_capacity = new int[4];
-        //    //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-        //    // double[,] curve_display_location = new double[4, 10000];
+        //    //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+        //    // double[,] curve_display_location = new double[4, 100000];
 
         //    //for (int i = 0; i < 4; i++)
         //    //{
@@ -3279,25 +3279,25 @@ namespace theHostComputer
 
         private double[,] delete_points_function_first_Z(double[,] chafen_orignal, double[,] chafen, long[] num)//用三西格玛判断删点函数
         {
-            //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+            //double[,] chafen = new double[4, 100000];         //原始信号的差分值
             double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
             double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
             double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
             double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
             double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
             double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-            double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-            //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-            long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-            //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+            double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+            //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+            long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+            //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
             int[] point_jizhi_capacity = new int[4];
             //int[] point_jixiaozhi_capacity = new int[4];
-            long[,] chafen_location = new long[4, 10000];
+            long[,] chafen_location = new long[4, 100000];
             //int[] chafen_location_capacity = new int[4];
-            double[,] chafen_reconstruct = new double[4, 10000];
+            double[,] chafen_reconstruct = new double[4, 100000];
             int[] chafen_reconstruct_capacity = new int[4];
-            //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-            //double[,] curve_display_location = new double[4, 10000];
+            //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+            //double[,] curve_display_location = new double[4, 100000];
 
             //for (int i = 0; i < 4; i++)
             //{
@@ -3459,25 +3459,25 @@ namespace theHostComputer
         }
         private double[,] delete_points_function_again_Z(double[,] chafen_orignal, double[,] chafen, long[] num)//用三西格玛判断删点函数
         {
-            //double[,] chafen = new double[4, 10000];         //原始信号的差分值
+            //double[,] chafen = new double[4, 100000];         //原始信号的差分值
             double[] somechannel_mean = new double[4];        //某个通道差分值的平均值
             double[] somechannel_biaozhuncha = new double[4];   //某个通道差分值的标准差
             double[] somechannel_max = new double[4];        //某个通道差分值的阈值（最大值）
             double[] somechannel_min = new double[4];        //某个通道差分值的阈值（最小值）
             double somechannel_sum = 0;              //求某个通道差分值的均值时涉及到的求和变量
             double somechannel_biaozhuncha_sum = 0;       //求某个通道差分值的标准差时涉及到的求和变量
-            double[,] point_jizhi_value = new double[4, 10000];      //存放某个通道差分值的极大值点
-            //double[,] point_jixiaozhi_value=new double[4,10000];    //存放某个通道差分值的极小值点
-            long[,] point_jizhi_location = new long[4, 10000];         //存放某个通道差分值的极大值点的位置
-            //long[,] point_jixiaozhi_location=new long[4,10000];       //存放某个通道差分值的极小值点的位置
+            double[,] point_jizhi_value = new double[4, 100000];      //存放某个通道差分值的极大值点
+            //double[,] point_jixiaozhi_value=new double[4,100000];    //存放某个通道差分值的极小值点
+            long[,] point_jizhi_location = new long[4, 100000];         //存放某个通道差分值的极大值点的位置
+            //long[,] point_jixiaozhi_location=new long[4,100000];       //存放某个通道差分值的极小值点的位置
             int[] point_jizhi_capacity = new int[4];
             //int[] point_jixiaozhi_capacity = new int[4];
-            long[,] chafen_location = new long[4, 10000];
+            long[,] chafen_location = new long[4, 100000];
             //int[] chafen_location_capacity = new int[4];
-            double[,] chafen_reconstruct = new double[4, 10000];
+            double[,] chafen_reconstruct = new double[4, 100000];
             int[] chafen_reconstruct_capacity = new int[4];
-            //double[,] curve_display = new double[4, 10000];     //最终用于曲线成像的值
-            // double[,] curve_display_location = new double[4, 10000];
+            //double[,] curve_display = new double[4, 100000];     //最终用于曲线成像的值
+            // double[,] curve_display_location = new double[4, 100000];
 
             //for (int i = 0; i < 4; i++)
             //{
@@ -3659,9 +3659,9 @@ namespace theHostComputer
 
         private double[,] defect_recognition(double[,] curve, long num)
         {
-            int[,] jizhi_location = new int[4, 10000];
+            int[,] jizhi_location = new int[4, 100000];
             int[] jizhi_capacity = new int[4];
-            double[,] defect = new double[4, 10000];
+            double[,] defect = new double[4, 100000];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < num; j++)
@@ -3713,7 +3713,7 @@ namespace theHostComputer
 
         private double[,] defect_recognition_XplusZ(double[,] defect_recognition_X, double[,] defect_recognition_Z, long num)
         {
-            double[,] defect_XplusZ = new double[4, 10000];
+            double[,] defect_XplusZ = new double[4, 100000];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < num; j++)
@@ -3740,7 +3740,7 @@ namespace theHostComputer
 
         private double[,] defect_recognition_another(double[,] curve_X, double[,] curve_Z, long num)
         {
-            double[,] defect_another = new double[4, 10000];
+            double[,] defect_another = new double[4, 100000];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < num; j++)
@@ -3766,8 +3766,8 @@ namespace theHostComputer
 
         private double[] reconstruction(double[,] rebuild_XplusZ, double[,] rebuild_another, long num)
         {
-            //double[,] reconstruction_data = new double[4, 10000];
-            double[] reconstruction_feedback = new double[10000];
+            //double[,] reconstruction_data = new double[4, 100000];
+            double[] reconstruction_feedback = new double[100000];
             for (int i = 0; i < 4; i++)
             {
                 for (int j = 0; j < num; j++)
@@ -3845,8 +3845,8 @@ namespace theHostComputer
 
         private double[] defect_recognition_2(double[] curve, long num)
         {
-            int[] jizhi_location = new int[10000];
-            double[] defect = new double[10000];
+            int[] jizhi_location = new int[100000];
+            double[] defect = new double[100000];
             defect_recognition_2_flag = 1;
             for (int j = 0; j < num; j++)
             {
@@ -3882,7 +3882,7 @@ namespace theHostComputer
 
         //private double[,] pic_2_defect_imagination(long num)
         //{
-        //    double[,] defect_imagination = new double[4, 10000];
+        //    double[,] defect_imagination = new double[4, 100000];
         //    for (int i = 0; i < 4; i++)
         //    {
         //        for (int j = 0; j < num; j++)
@@ -3904,7 +3904,7 @@ namespace theHostComputer
 
         //private double[,] pic_2_contour(long num)
         //{
-        //    double[,] imagination = new double[8, 10000];
+        //    double[,] imagination = new double[8, 100000];
         //    for (int i = 0; i < 4; i++)
         //    {
         //        for (int j = 0; j < num; j++)
@@ -3935,7 +3935,7 @@ namespace theHostComputer
 
         private double[,] pic_2_contour(long num)
         {
-            double[,] imagination = new double[8, 10000];
+            double[,] imagination = new double[8, 100000];
             for (int i = 0; i < 7; i++)
             {
                 for (int j = 0; j < num; j++)
@@ -4331,553 +4331,554 @@ namespace theHostComputer
             }
         }
 
-        private void pic_Paint(object sender, PaintEventArgs e)
-        {
-            //缺陷定位
-            double cx = 0;
-            double cy = 0;
-            double cz = 0;
-            double cm = 0; //腐蚀面积
-            long ii = 0;
-            long jj = 0;
-            int i = 0;
-            double x0 = 0.025;
-            double y0 = 0.025;
-            double W = 0.95;
-            double H = 0.90;
-            float x = (float)(pic.Width * x0);
-            float y = (float)(pic.Height * y0);
-            float width = (float)(pic.Width * W);
-            float height = (float)(pic.Height * H);
-            int n = 0;
-            double C;
-            lenofpiece = double.Parse(DisText.Text);
-            double Sen = double.Parse(yztext.Text);//灵敏度
-            tiligaodu = double.Parse(TLBox.Text);
-            double D = double.Parse(DText.Text);
+        //绘画损失初始图
+        //private void pic_Paint(object sender, PaintEventArgs e)
+        //{
+        //    //缺陷定位
+        //    double cx = 0;
+        //    double cy = 0;
+        //    double cz = 0;
+        //    double cm = 0; //腐蚀面积
+        //    long ii = 0;
+        //    long jj = 0;
+        //    int i = 0;
+        //    double x0 = 0.025;
+        //    double y0 = 0.025;
+        //    double W = 0.95;
+        //    double H = 0.90;
+        //    float x = (float)(pic.Width * x0);
+        //    float y = (float)(pic.Height * y0);
+        //    float width = (float)(pic.Width * W);
+        //    float height = (float)(pic.Height * H);
+        //    int n = 0;
+        //    double C;
+        //    lenofpiece = double.Parse(DisText.Text);
+        //    double Sen = double.Parse(yztext.Text);//灵敏度
+        //    tiligaodu = double.Parse(TLBox.Text);
+        //    double D = double.Parse(DText.Text);
 
-            //double max1 = 0;
-            //double min1 = 0;
-            //double max2 = 0;
-            //double min2 = 0;
-            //double max3 = 0;
-            //double min3 = 0;
-            //double max4 = 0;
-            //double min4 = 0;
+        //    //double max1 = 0;
+        //    //double min1 = 0;
+        //    //double max2 = 0;
+        //    //double min2 = 0;
+        //    //double max3 = 0;
+        //    //double min3 = 0;
+        //    //double max4 = 0;
+        //    //double min4 = 0;
 
-            //double up1=0;
-            //double down1=0;
-            //double up2=0;
-            //double down2=0;
-            //double up3=0;
-            //double down3=0;
-            //double up4=0;
-            //double down4=0;
+        //    //double up1=0;
+        //    //double down1=0;
+        //    //double up2=0;
+        //    //double down2=0;
+        //    //double up3=0;
+        //    //double down3=0;
+        //    //double up4=0;
+        //    //double down4=0;
 
-            //double value1=0;
-            //double value2=0;
-            //double value3=0;
-            //double value4=0;
+        //    //double value1=0;
+        //    //double value2=0;
+        //    //double value3=0;
+        //    //double value4=0;
 
-            double sum_1 = 0;
-            double mean_1 = 0;
-            double biaozhuncha_sum_1 = 0;
-            double biaozhuncha_1 = 0;
-            double[] ysdata_new_1 = new double[10000];
-            double[] Dydata_new_1 = new double[10000];
+        //    double sum_1 = 0;
+        //    double mean_1 = 0;
+        //    double biaozhuncha_sum_1 = 0;
+        //    double biaozhuncha_1 = 0;
+        //    double[] ysdata_new_1 = new double[100000];
+        //    double[] Dydata_new_1 = new double[100000];
 
-            double sum_3 = 0;
-            double mean_3 = 0;
-            double biaozhuncha_sum_3 = 0;
-            double biaozhuncha_3 = 0;
-            double[] ysdata_new_3 = new double[10000];
-            double[] Dydata_new_3 = new double[10000];
+        //    double sum_3 = 0;
+        //    double mean_3 = 0;
+        //    double biaozhuncha_sum_3 = 0;
+        //    double biaozhuncha_3 = 0;
+        //    double[] ysdata_new_3 = new double[100000];
+        //    double[] Dydata_new_3 = new double[100000];
 
-            double[] ysdata_new = new double[10000];
-            double[] Dydata_new = new double[10000];
+        //    double[] ysdata_new = new double[100000];
+        //    double[] Dydata_new = new double[100000];
 
-            System.Random rnd = new System.Random();
-            if (runflag && pointflag && readflag)
-            {
-                Graphics gg = e.Graphics;
-                cx = (currentPoint.X - x) * lenofpiece / width;
-                cy = (pic.Height - currentPoint.Y - 0.075 * pic.Height) * widthOfPiece / height;
+        //    System.Random rnd = new System.Random();
+        //    if (runflag && pointflag && readflag)
+        //    {
+        //        Graphics gg = e.Graphics;
+        //        cx = (currentPoint.X - x) * lenofpiece / width;
+        //        cy = (pic.Height - currentPoint.Y - 0.075 * pic.Height) * widthOfPiece / height;
 
-                n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
-                C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
-                F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
-                //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
+        //        n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
+        //        C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
+        //        F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
+        //        //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
 
-                ////////////////////////////////张量///////////////////////////////////////////
-                //if (Math.Abs(Freaddata[0, n]) > 0)
-                //{
-                //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
-                //    {
-                //        F1 = (Freaddata[0, n] + 400) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 100 && Math.Abs(Freaddata[0, n]) <= 200)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 200 && Math.Abs(Freaddata[0, n]) <= 300)
-                //    {
-                //        F1 = (Freaddata[0, n] + 200) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 300 && Math.Abs(Freaddata[0, n]) <= 400)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 400 && Math.Abs(Freaddata[0, n]) <= 500)
-                //    {
-                //        F1 = Freaddata[0, n] * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 500 && Math.Abs(Freaddata[0, n]) <= 600)
-                //    {
-                //        F1 = (Freaddata[0, n] - 100) * 100;
-                //    }
-                //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
-                //    {
-                //        F1 = (Freaddata[0, n] + 300) * 100;
-                //    }
-                //}
-                //////////////////////////////////////////////////////////////////////////////
-                /*********************************************2016.5.10改腐蚀深度定量********************************************/
-                ///////////归一化////////////////////////////
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_1 = sum_1 + ysdata[2, j];
-                }
-                mean_1 = sum_1 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((ysdata[2, j] - mean_1), 2);
-                }
-                biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    ysdata_new_1[j] = (ysdata[2, j] - mean_1) / biaozhuncha_1;
-                }
+        //        ////////////////////////////////张量///////////////////////////////////////////
+        //        //if (Math.Abs(Freaddata[0, n]) > 0)
+        //        //{
+        //        //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 400) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 100 && Math.Abs(Freaddata[0, n]) <= 200)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 200 && Math.Abs(Freaddata[0, n]) <= 300)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 200) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 300 && Math.Abs(Freaddata[0, n]) <= 400)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 400 && Math.Abs(Freaddata[0, n]) <= 500)
+        //        //    {
+        //        //        F1 = Freaddata[0, n] * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 500 && Math.Abs(Freaddata[0, n]) <= 600)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] - 100) * 100;
+        //        //    }
+        //        //    if (Math.Abs(Freaddata[0, n]) > 0 && Math.Abs(Freaddata[0, n]) <= 100)
+        //        //    {
+        //        //        F1 = (Freaddata[0, n] + 300) * 100;
+        //        //    }
+        //        //}
+        //        //////////////////////////////////////////////////////////////////////////////
+        //        /*********************************************2016.5.10改腐蚀深度定量********************************************/
+        //        ///////////归一化////////////////////////////
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_1 = sum_1 + ysdata[2, j];
+        //        }
+        //        mean_1 = sum_1 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((ysdata[2, j] - mean_1), 2);
+        //        }
+        //        biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            ysdata_new_1[j] = (ysdata[2, j] - mean_1) / biaozhuncha_1;
+        //        }
 
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_3 = sum_3 + ysdata[8, j];
-                }
-                mean_3 = sum_3 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((ysdata[8, j] - mean_3), 2);
-                }
-                biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    ysdata_new_3[j] = (ysdata[8, j] - mean_3) / biaozhuncha_3;
-                }
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_3 = sum_3 + ysdata[8, j];
+        //        }
+        //        mean_3 = sum_3 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((ysdata[8, j] - mean_3), 2);
+        //        }
+        //        biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            ysdata_new_3[j] = (ysdata[8, j] - mean_3) / biaozhuncha_3;
+        //        }
 
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    ysdata_new[j] = (ysdata_new_1[j] + ysdata_new_3[j]) / 2;
-                }
-
-
-                if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                {
-                    cz = 0;
-                }
-
-                if (bdxstext1.Text == "")
-                {
-                    double fushi_canshu_a = 0;
-                    double fushi_canshu_b = 0;
-
-                    int TLBox1 = Int32.Parse(TLBox.Text);
-                    if (tiligaodu >= 0 && tiligaodu < 250)
-                    {
-                        fushi_canshu_a = 9.45E+01;
-                        fushi_canshu_b = -1.346;
-
-                    }
-                    if (tiligaodu >= 250 && tiligaodu < 480)
-                    {
-                        fushi_canshu_a = 120.6;
-                        fushi_canshu_b = -1.385;
-                    }
-                    if (tiligaodu >= 480 && tiligaodu < 700)
-                    {
-                        fushi_canshu_a = 61.12;
-                        fushi_canshu_b = -1.027;
-                    }
-                    if (tiligaodu >= 700 && tiligaodu < 970)
-                    {
-                        fushi_canshu_a = 260.2;
-                        fushi_canshu_b = -1.5;
-                    }
-                    if (tiligaodu >= 970 && tiligaodu < 1100)
-                    {
-                        fushi_canshu_a = 46.3;
-                        fushi_canshu_b = -1.054;
-                    }
-                    if (tiligaodu >= 1100 && tiligaodu < 1350)
-                    {
-                        fushi_canshu_a = 1.05E+06;
-                        fushi_canshu_b = -9.415;
-                    }
-                    if (tiligaodu >= 1350 && tiligaodu < 1620)
-                    {
-                        fushi_canshu_a = 10.5;
-                        fushi_canshu_b = -1.584;
-                    }
-                    if (tiligaodu >= 1620 && tiligaodu < 1860)
-                    {
-                        fushi_canshu_a = 784.8;
-                        fushi_canshu_b = -3.046;
-                    }
-                    if (tiligaodu > 1860)
-                    {
-                        fushi_canshu_a = 28.22;
-                        fushi_canshu_b = -1.784;
-                    }
-                    //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                    // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
-                    cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * ysdata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                    }
-                    if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                    {
-                        cz = 0;
-                    }
-
-                }
-                else
-                {
-                    double huiguixishu11 = Convert.ToDouble(huiguixishu1);
-                    double huiguixishu22 = Convert.ToDouble(huiguixishu2);
-
-                    cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
-                    }
-                    if (cz == 0)
-                    {
-                        cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
-                    }
-
-                    if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                    {
-                        cz = 0;
-                    }
-                }
-                //else 
-                //{
-                //    if ((D <= 100) && (D > 0))
-                //    {
-                //        cz = (2.182 * 0.00000001 * Math.Exp(3.009 * F1) + 1.92 * 0.00000001 * Math.Exp(3.014 * F2) + 0.9927 * 0.00000001 * Math.Exp(3.132 * F3) + 2.978 * 0.00000001 * Math.Exp(3.017 * F4)) / 4;
-                //    }
-                //    if ((D > 100) && (D <= 200))
-                //    {
-                //        cz = (3.826 * Math.Pow(10, -5) * Math.Exp(1.762 * F1) + 4.291 * Math.Pow(10, -5) * Math.Exp(1.735 * F2) + 3.799 * Math.Pow(10, -5) * Math.Exp(1.767 * F3) + 3.505 * Math.Pow(10, -5) * Math.Exp(1.809 * F4)) / 4;
-                //    }
-                //    if ((D > 200) && (D <= 300))
-                //    {
-                //        cz = (1.04 * Math.Pow(10, -7) * Math.Exp(3.039 * F1) + 0.9371 * Math.Pow(10, -7) * Math.Exp(3.044 * F2) + 1.083 * Math.Pow(10, -7) * Math.Exp(3.04 * F3) + 1.239 * Math.Pow(10, -7) * Math.Exp(3.067 * F4)) / 4;
-                //    }
-                //    if ((D > 300) && (D <= 400))
-                //    {
-                //        cz = (7.303 * Math.Pow(10, 4) * Math.Exp(-1.941 * F1) + 7.271 * Math.Pow(10, 4) * Math.Exp(-1.932 * F2) + 7.417 * Math.Pow(10, 4) * Math.Exp(-1.948 * F3) + 7.482 * Math.Pow(10, 4) * Math.Exp(-1.982 * F4)) / 4;
-                //    }
-                //    if ((D > 400) && (D <= 500))
-                //    {
-                //        cz = (8.494 * Math.Pow(10, 31) * Math.Exp(-10.56 * F1) + 3.215 * Math.Pow(10, 30) * Math.Exp(-10.06 * F2) + 1.375 * Math.Pow(10, 32) * Math.Exp(-10.68 * F3) + 6.185 * Math.Pow(10, 33) * Math.Exp(-11.41 * F4)) / 4;
-                //    }
-                //    if (D > 500)
-                //    {
-                //        cz = (1.03 * Math.Pow(10, 21) * Math.Exp(-4.3 * F1) + 5.897 * Math.Pow(10, 20) * Math.Exp(-4.241 * F2) + 1.019 * Math.Pow(10, 21) * Math.Exp(-4.317 * F3) + 2.076 * Math.Pow(10, 21) * Math.Exp(-4.44 * F4)) / 4;
-                //    }
-                //    if (cz > ThickOftube)
-                //    {
-                //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    }
-
-                //}
-                //else
-                //{
-                //    if ((D <= 100) && (D > 0))
-                //    {
-                //        cz = (2.468 * Math.Exp(0.8385 * F1) + 2.062 * Math.Exp(1.111 * F2) + 2.113 * Math.Exp(1.079 * F3) + 2.588 * Math.Exp(0.7795 * F4)) / 4;
-                //    }
-                //    if ((D > 100) && (D <= 200))
-                //    {
-                //        cz = (3.515 * Math.Exp(1.97 * F1) + 3.289 * Math.Exp(1.97 * F2) + 3.401 * Math.Exp(1.98 * F3) + 3.499 * Math.Exp(2.07 * F4)) / 4;
-                //    }
-                //    if ((D > 200) && (D <= 300))
-                //    {
-                //        cz = (1.904 * Math.Exp(3.042 * F1) + 2.177 * Math.Exp(3.013 * F2) + 1.818 * Math.Exp(3.057 * F3) + 1.514 * Math.Exp(3.132 * F4)) / 4;
-                //    }
-                //    if ((D > 300) && (D <= 400))
-                //    {
-                //        cz = (4.457 * Math.Exp(1.715 * F1) + 4.64 * Math.Exp(1.714 * F2) + 4.605 * Math.Exp(1.723 * F3) + 4.439 * Math.Exp(1.745 * F4)) / 4;
-                //    }
-                //    if ((D > 400) && (D <= 500))
-                //    {
-                //        cz = (4.4663 * Math.Exp(2.509 * F1) + 1.952 * Math.Exp(2.37 * F2) + 7.502 * Math.Exp(2.593 * F3) + 2.372 * Math.Exp(2.813 * F4)) / 4;
-                //    }
-                //    if (D > 500)
-                //    {
-                //        cz = (1.188 * Math.Exp(3.4 * F1) + 2.677 * Math.Exp(3.2 * F2) + 1.54 * Math.Exp(3.4 * F3) + 1.38 * Math.Exp(3.8 * F4)) / 4;
-                //    }
-                //    if (cz > ThickOftube)
-                //    {
-                //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                //    }
-                //}
-
-                gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
-                gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
-                XtextBox.Text = string.Format("{0:0}", cx) + "mm";
-                YtextBox.Text = string.Format("{0:0}", cy) + "mm";
-                ZtextBox.Text = string.Format("{0:0.00}", cz) + "mm";
-
-                ////计算区域面积
-                if (cishu == 4)
-                {
-                    double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
-                    double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
-                    double area = bianchang * kuandu / 100;    //面积(平方厘米)
-                    MjtextBox.Text = string.Format("{0:0.0}", area) + "cm²";
-                    //MjtextBox.Text = Convert .ToString (area);
-                }
-                /////
-            }
-            else
-            {
-                Graphics gg = e.Graphics;
-                cx = (currentPoint.X - x) * lenofpiece / width;
-                cy = (pic.Height - currentPoint.Y - 0.075 * pic.Height) * widthOfPiece / height;
-
-                n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
-                C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
-                F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
-                //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
-                //max1 = Dydata2[2, 0];
-                //min1 = Dydata2[2, 0];
-                //max2 = Dydata2[5, 0];
-                //min2 = Dydata2[5, 0];
-                //max3 = Dydata2[8, 0];
-                //min3 = Dydata2[8, 0];
-                //max4 = Dydata2[11, 0];
-                //min4 = Dydata2[11, 0];
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max1 < Dydata2[2, i + 1])
-                //    {
-                //        max1 = Dydata2[2, i + 1];
-                //    }
-                //    if (min1 > Dydata2[2, i + 1])
-                //    {
-                //        min1 = Dydata2[2, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max2 < Dydata2[5, i + 1])
-                //    {
-                //        max2 = Dydata2[5, i + 1];
-                //    }
-                //    if (min2 > Dydata2[5, i + 1])
-                //    {
-                //        min2 = Dydata2[5, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max3 < Dydata2[8, i + 1])
-                //    {
-                //        max3 = Dydata2[8, i + 1];
-                //    }
-                //    if (min3 > Dydata2[8, i + 1])
-                //    {
-                //        min3 = Dydata2[8, i + 1];
-                //    }
-                //}
-                //for (i = 0; i < original_num - 1; i++)
-                //{
-                //    if (max4 < Dydata2[11, i + 1])
-                //    {
-                //        max4 = Dydata2[11, i + 1];
-                //    }
-                //    if (min4 > Dydata2[11, i + 1])
-                //    {
-                //        min4 = Dydata2[11, i + 1];
-                //    }
-                //}
-
-                //up1 = ((max1 / 1000) + 1) * 1000;
-                //down1 = ((min1 / 1000) - 1) * 1000;
-                //value1 = (((Dydata2[2, n] - down1) / (up1 - down1)) * 10000) + 10000;
-
-                //up2 = ((max2 / 1000) + 1) * 1000;
-                //down2 = ((min2 / 1000) - 1) * 1000;
-                //value2 = (((Dydata2[5, n] - down2) / (up2 - down2)) * 10000) + 10000;
-
-                //up3 = ((max3 / 1000) + 1) * 1000;
-                //down3 = ((min3 / 1000) - 1) * 1000;
-                //value3 = (((Dydata2[8, n] - down3) / (up3 - down3)) * 10000) + 10000;
-
-                //up4 = ((max4 / 1000) + 1) * 1000;
-                //down4 = ((min4 / 1000) - 1) * 1000;
-                //value4 = (((Dydata2[11, n] - down4) / (up4 - down4)) * 10000) + 10000;
-
-                //F1 = Math.Pow(150, 2) / value1;
-                //F2 = Math.Pow(150, 2) / value2;
-                //F3 = Math.Pow(150, 2) / value3;
-                //F4 = Math.Pow(150, 2) / value4;
-                /*********************************************2016.5.10改腐蚀深度定量********************************************/
-                ///////////归一化////////////////////////////
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_1 = sum_1 + Dydata2[2, j];
-                }
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            ysdata_new[j] = (ysdata_new_1[j] + ysdata_new_3[j]) / 2;
+        //        }
 
 
+        //        if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //        {
+        //            cz = 0;
+        //        }
 
-                mean_1 = sum_1 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
-                }
-                biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
-                }
+        //        if (bdxstext1.Text == "")
+        //        {
+        //            double fushi_canshu_a = 0;
+        //            double fushi_canshu_b = 0;
 
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    sum_3 = sum_3 + Dydata2[8, j];
-                }
-                mean_3 = sum_3 / (original_num - 1);
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
-                }
-                biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
-                }
+        //            int TLBox1 = Int32.Parse(TLBox.Text);
+        //            if (tiligaodu >= 0 && tiligaodu < 250)
+        //            {
+        //                fushi_canshu_a = 9.45E+01;
+        //                fushi_canshu_b = -1.346;
 
-                for (int j = 0; j < original_num - 1; j++)
-                {
-                    Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
-                }
-                ////////////////////////////////////////////
-                if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                {
-                    cz = 0;
-                }
-                if (bdxstext1.Text == "")
-                {
-                    double fushi_canshu_a = 0;
-                    double fushi_canshu_b = 0;
+        //            }
+        //            if (tiligaodu >= 250 && tiligaodu < 480)
+        //            {
+        //                fushi_canshu_a = 120.6;
+        //                fushi_canshu_b = -1.385;
+        //            }
+        //            if (tiligaodu >= 480 && tiligaodu < 700)
+        //            {
+        //                fushi_canshu_a = 61.12;
+        //                fushi_canshu_b = -1.027;
+        //            }
+        //            if (tiligaodu >= 700 && tiligaodu < 970)
+        //            {
+        //                fushi_canshu_a = 260.2;
+        //                fushi_canshu_b = -1.5;
+        //            }
+        //            if (tiligaodu >= 970 && tiligaodu < 1100)
+        //            {
+        //                fushi_canshu_a = 46.3;
+        //                fushi_canshu_b = -1.054;
+        //            }
+        //            if (tiligaodu >= 1100 && tiligaodu < 1350)
+        //            {
+        //                fushi_canshu_a = 1.05E+06;
+        //                fushi_canshu_b = -9.415;
+        //            }
+        //            if (tiligaodu >= 1350 && tiligaodu < 1620)
+        //            {
+        //                fushi_canshu_a = 10.5;
+        //                fushi_canshu_b = -1.584;
+        //            }
+        //            if (tiligaodu >= 1620 && tiligaodu < 1860)
+        //            {
+        //                fushi_canshu_a = 784.8;
+        //                fushi_canshu_b = -3.046;
+        //            }
+        //            if (tiligaodu > 1860)
+        //            {
+        //                fushi_canshu_a = 28.22;
+        //                fushi_canshu_b = -1.784;
+        //            }
+        //            //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //            // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
+        //            cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * ysdata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
 
-                    int TLBox1 = Int32.Parse(TLBox.Text);
-                    if (tiligaodu >= 0 && tiligaodu < 250)
-                    {
-                        fushi_canshu_a = 9.45E+01;
-                        fushi_canshu_b = -1.346;
+        //        }
+        //        else
+        //        {
+        //            double huiguixishu11 = Convert.ToDouble(huiguixishu1);
+        //            double huiguixishu22 = Convert.ToDouble(huiguixishu2);
 
-                    }
-                    if (tiligaodu >= 250 && tiligaodu < 480)
-                    {
-                        fushi_canshu_a = 120.6;
-                        fushi_canshu_b = -1.385;
-                    }
-                    if (tiligaodu >= 480 && tiligaodu < 700)
-                    {
-                        fushi_canshu_a = 61.12;
-                        fushi_canshu_b = -1.027;
-                    }
-                    if (tiligaodu >= 700 && tiligaodu < 970)
-                    {
-                        fushi_canshu_a = 260.2;
-                        fushi_canshu_b = -1.5;
-                    }
-                    if (tiligaodu >= 970 && tiligaodu < 1100)
-                    {
-                        fushi_canshu_a = 46.3;
-                        fushi_canshu_b = -1.054;
-                    }
-                    if (tiligaodu >= 1100 && tiligaodu < 1350)
-                    {
-                        fushi_canshu_a = 1.05E+06;
-                        fushi_canshu_b = -9.415;
-                    }
-                    if (tiligaodu >= 1350 && tiligaodu < 1620)
-                    {
-                        fushi_canshu_a = 10.5;
-                        fushi_canshu_b = -1.584;
-                    }
-                    if (tiligaodu >= 1620 && tiligaodu < 1860)
-                    {
-                        fushi_canshu_a = 784.8;
-                        fushi_canshu_b = -3.046;
-                    }
-                    if (tiligaodu > 1860)
-                    {
-                        fushi_canshu_a = 28.22;
-                        fushi_canshu_b = -1.784;
-                    }
-                    //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
-                    // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
-                    cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * Dydata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
-                    }
-                    if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                    {
-                        cz = 0;
-                    }
-                }
-                else
-                {
-                    double huiguixishu11 = Convert.ToDouble(huiguixishu1);
-                    double huiguixishu22 = Convert.ToDouble(huiguixishu2);
+        //            cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if (cz == 0)
+        //            {
+        //                cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
+        //            }
 
-                    cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
-                    if (cz > ThickOftube)
-                    {
-                        cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
-                    }
-                    if (cz == 0)
-                    {
-                        cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
-                    }
-                    if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
-                    {
-                        cz = 0;
-                    }
+        //            if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
+        //        }
+        //        //else 
+        //        //{
+        //        //    if ((D <= 100) && (D > 0))
+        //        //    {
+        //        //        cz = (2.182 * 0.00000001 * Math.Exp(3.009 * F1) + 1.92 * 0.00000001 * Math.Exp(3.014 * F2) + 0.9927 * 0.00000001 * Math.Exp(3.132 * F3) + 2.978 * 0.00000001 * Math.Exp(3.017 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 100) && (D <= 200))
+        //        //    {
+        //        //        cz = (3.826 * Math.Pow(10, -5) * Math.Exp(1.762 * F1) + 4.291 * Math.Pow(10, -5) * Math.Exp(1.735 * F2) + 3.799 * Math.Pow(10, -5) * Math.Exp(1.767 * F3) + 3.505 * Math.Pow(10, -5) * Math.Exp(1.809 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 200) && (D <= 300))
+        //        //    {
+        //        //        cz = (1.04 * Math.Pow(10, -7) * Math.Exp(3.039 * F1) + 0.9371 * Math.Pow(10, -7) * Math.Exp(3.044 * F2) + 1.083 * Math.Pow(10, -7) * Math.Exp(3.04 * F3) + 1.239 * Math.Pow(10, -7) * Math.Exp(3.067 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 300) && (D <= 400))
+        //        //    {
+        //        //        cz = (7.303 * Math.Pow(10, 4) * Math.Exp(-1.941 * F1) + 7.271 * Math.Pow(10, 4) * Math.Exp(-1.932 * F2) + 7.417 * Math.Pow(10, 4) * Math.Exp(-1.948 * F3) + 7.482 * Math.Pow(10, 4) * Math.Exp(-1.982 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 400) && (D <= 500))
+        //        //    {
+        //        //        cz = (8.494 * Math.Pow(10, 31) * Math.Exp(-10.56 * F1) + 3.215 * Math.Pow(10, 30) * Math.Exp(-10.06 * F2) + 1.375 * Math.Pow(10, 32) * Math.Exp(-10.68 * F3) + 6.185 * Math.Pow(10, 33) * Math.Exp(-11.41 * F4)) / 4;
+        //        //    }
+        //        //    if (D > 500)
+        //        //    {
+        //        //        cz = (1.03 * Math.Pow(10, 21) * Math.Exp(-4.3 * F1) + 5.897 * Math.Pow(10, 20) * Math.Exp(-4.241 * F2) + 1.019 * Math.Pow(10, 21) * Math.Exp(-4.317 * F3) + 2.076 * Math.Pow(10, 21) * Math.Exp(-4.44 * F4)) / 4;
+        //        //    }
+        //        //    if (cz > ThickOftube)
+        //        //    {
+        //        //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    }
 
-                }
-                gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
-                gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
-                XtextBox.Text = string.Format("{0:0}", cx) + "mm";
-                YtextBox.Text = string.Format("{0:0}", cy) + "mm";
-                ZtextBox.Text = string.Format("{0:0.00}", cz) + "mm";
+        //        //}
+        //        //else
+        //        //{
+        //        //    if ((D <= 100) && (D > 0))
+        //        //    {
+        //        //        cz = (2.468 * Math.Exp(0.8385 * F1) + 2.062 * Math.Exp(1.111 * F2) + 2.113 * Math.Exp(1.079 * F3) + 2.588 * Math.Exp(0.7795 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 100) && (D <= 200))
+        //        //    {
+        //        //        cz = (3.515 * Math.Exp(1.97 * F1) + 3.289 * Math.Exp(1.97 * F2) + 3.401 * Math.Exp(1.98 * F3) + 3.499 * Math.Exp(2.07 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 200) && (D <= 300))
+        //        //    {
+        //        //        cz = (1.904 * Math.Exp(3.042 * F1) + 2.177 * Math.Exp(3.013 * F2) + 1.818 * Math.Exp(3.057 * F3) + 1.514 * Math.Exp(3.132 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 300) && (D <= 400))
+        //        //    {
+        //        //        cz = (4.457 * Math.Exp(1.715 * F1) + 4.64 * Math.Exp(1.714 * F2) + 4.605 * Math.Exp(1.723 * F3) + 4.439 * Math.Exp(1.745 * F4)) / 4;
+        //        //    }
+        //        //    if ((D > 400) && (D <= 500))
+        //        //    {
+        //        //        cz = (4.4663 * Math.Exp(2.509 * F1) + 1.952 * Math.Exp(2.37 * F2) + 7.502 * Math.Exp(2.593 * F3) + 2.372 * Math.Exp(2.813 * F4)) / 4;
+        //        //    }
+        //        //    if (D > 500)
+        //        //    {
+        //        //        cz = (1.188 * Math.Exp(3.4 * F1) + 2.677 * Math.Exp(3.2 * F2) + 1.54 * Math.Exp(3.4 * F3) + 1.38 * Math.Exp(3.8 * F4)) / 4;
+        //        //    }
+        //        //    if (cz > ThickOftube)
+        //        //    {
+        //        //        cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //        //    }
+        //        //}
 
-                ////计算区域面积
-                if (cishu == 4)
-                {
-                    double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
-                    double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
-                    double area = bianchang * kuandu / 100;    //面积(平方厘米)
-                    MjtextBox.Text = string.Format("{0:0.0}", area) + "cm²";
-                    //MjtextBox.Text = Convert .ToString (area);
-                }
-            }
-        }
+        //        gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
+        //        gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
+        //        XtextBox.Text = string.Format("{0:0}", cx) + "mm";
+        //        YtextBox.Text = string.Format("{0:0}", cy) + "mm";
+        //        ZtextBox.Text = string.Format("{0:0.00}", cz) + "mm";
+
+        //        ////计算区域面积
+        //        if (cishu == 4)
+        //        {
+        //            double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
+        //            double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
+        //            double area = bianchang * kuandu / 100;    //面积(平方厘米)
+        //            MjtextBox.Text = string.Format("{0:0.0}", area) + "cm²";
+        //            //MjtextBox.Text = Convert .ToString (area);
+        //        }
+        //        /////
+        //    }
+        //    else
+        //    {
+        //        Graphics gg = e.Graphics;
+        //        cx = (currentPoint.X - x) * lenofpiece / width;
+        //        cy = (pic.Height - currentPoint.Y - 0.075 * pic.Height) * widthOfPiece / height;
+
+        //        n = Convert.ToInt16(Math.Abs(cx) / (lenofpiece / (original_num - 1)));
+        //        C = ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n];
+        //        F = (ysdatanew[0, n] + ysdatanew[1, n] + ysdatanew[2, n] + ysdatanew[3, n]) / (4 * Math.Pow(tiligaodu * 0.000000001, 2));
+        //        //cz=Math.Abs ( -1.0212 * F - 2.5295)+0.2*rnd.NextDouble ();
+        //        //max1 = Dydata2[2, 0];
+        //        //min1 = Dydata2[2, 0];
+        //        //max2 = Dydata2[5, 0];
+        //        //min2 = Dydata2[5, 0];
+        //        //max3 = Dydata2[8, 0];
+        //        //min3 = Dydata2[8, 0];
+        //        //max4 = Dydata2[11, 0];
+        //        //min4 = Dydata2[11, 0];
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max1 < Dydata2[2, i + 1])
+        //        //    {
+        //        //        max1 = Dydata2[2, i + 1];
+        //        //    }
+        //        //    if (min1 > Dydata2[2, i + 1])
+        //        //    {
+        //        //        min1 = Dydata2[2, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max2 < Dydata2[5, i + 1])
+        //        //    {
+        //        //        max2 = Dydata2[5, i + 1];
+        //        //    }
+        //        //    if (min2 > Dydata2[5, i + 1])
+        //        //    {
+        //        //        min2 = Dydata2[5, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max3 < Dydata2[8, i + 1])
+        //        //    {
+        //        //        max3 = Dydata2[8, i + 1];
+        //        //    }
+        //        //    if (min3 > Dydata2[8, i + 1])
+        //        //    {
+        //        //        min3 = Dydata2[8, i + 1];
+        //        //    }
+        //        //}
+        //        //for (i = 0; i < original_num - 1; i++)
+        //        //{
+        //        //    if (max4 < Dydata2[11, i + 1])
+        //        //    {
+        //        //        max4 = Dydata2[11, i + 1];
+        //        //    }
+        //        //    if (min4 > Dydata2[11, i + 1])
+        //        //    {
+        //        //        min4 = Dydata2[11, i + 1];
+        //        //    }
+        //        //}
+
+        //        //up1 = ((max1 / 1000) + 1) * 1000;
+        //        //down1 = ((min1 / 1000) - 1) * 1000;
+        //        //value1 = (((Dydata2[2, n] - down1) / (up1 - down1)) * 10000) + 100000;
+
+        //        //up2 = ((max2 / 1000) + 1) * 1000;
+        //        //down2 = ((min2 / 1000) - 1) * 1000;
+        //        //value2 = (((Dydata2[5, n] - down2) / (up2 - down2)) * 10000) + 100000;
+
+        //        //up3 = ((max3 / 1000) + 1) * 1000;
+        //        //down3 = ((min3 / 1000) - 1) * 1000;
+        //        //value3 = (((Dydata2[8, n] - down3) / (up3 - down3)) * 10000) + 100000;
+
+        //        //up4 = ((max4 / 1000) + 1) * 1000;
+        //        //down4 = ((min4 / 1000) - 1) * 1000;
+        //        //value4 = (((Dydata2[11, n] - down4) / (up4 - down4)) * 10000) + 100000;
+
+        //        //F1 = Math.Pow(150, 2) / value1;
+        //        //F2 = Math.Pow(150, 2) / value2;
+        //        //F3 = Math.Pow(150, 2) / value3;
+        //        //F4 = Math.Pow(150, 2) / value4;
+        //        /*********************************************2016.5.10改腐蚀深度定量********************************************/
+        //        ///////////归一化////////////////////////////
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_1 = sum_1 + Dydata2[2, j];
+        //        }
+
+
+
+        //        mean_1 = sum_1 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_1 = biaozhuncha_sum_1 + Math.Pow((Dydata2[2, j] - mean_1), 2);
+        //        }
+        //        biaozhuncha_1 = Math.Sqrt(biaozhuncha_sum_1 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_1[j] = (Dydata2[2, j] - mean_1) / biaozhuncha_1;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            sum_3 = sum_3 + Dydata2[8, j];
+        //        }
+        //        mean_3 = sum_3 / (original_num - 1);
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            biaozhuncha_sum_3 = biaozhuncha_sum_3 + Math.Pow((Dydata2[8, j] - mean_3), 2);
+        //        }
+        //        biaozhuncha_3 = Math.Sqrt(biaozhuncha_sum_3 / (original_num - 1));
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new_3[j] = (Dydata2[8, j] - mean_3) / biaozhuncha_3;
+        //        }
+
+        //        for (int j = 0; j < original_num - 1; j++)
+        //        {
+        //            Dydata_new[j] = (Dydata_new_1[j] + Dydata_new_3[j]) / 2;
+        //        }
+        //        ////////////////////////////////////////////
+        //        if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //        {
+        //            cz = 0;
+        //        }
+        //        if (bdxstext1.Text == "")
+        //        {
+        //            double fushi_canshu_a = 0;
+        //            double fushi_canshu_b = 0;
+
+        //            int TLBox1 = Int32.Parse(TLBox.Text);
+        //            if (tiligaodu >= 0 && tiligaodu < 250)
+        //            {
+        //                fushi_canshu_a = 9.45E+01;
+        //                fushi_canshu_b = -1.346;
+
+        //            }
+        //            if (tiligaodu >= 250 && tiligaodu < 480)
+        //            {
+        //                fushi_canshu_a = 120.6;
+        //                fushi_canshu_b = -1.385;
+        //            }
+        //            if (tiligaodu >= 480 && tiligaodu < 700)
+        //            {
+        //                fushi_canshu_a = 61.12;
+        //                fushi_canshu_b = -1.027;
+        //            }
+        //            if (tiligaodu >= 700 && tiligaodu < 970)
+        //            {
+        //                fushi_canshu_a = 260.2;
+        //                fushi_canshu_b = -1.5;
+        //            }
+        //            if (tiligaodu >= 970 && tiligaodu < 1100)
+        //            {
+        //                fushi_canshu_a = 46.3;
+        //                fushi_canshu_b = -1.054;
+        //            }
+        //            if (tiligaodu >= 1100 && tiligaodu < 1350)
+        //            {
+        //                fushi_canshu_a = 1.05E+06;
+        //                fushi_canshu_b = -9.415;
+        //            }
+        //            if (tiligaodu >= 1350 && tiligaodu < 1620)
+        //            {
+        //                fushi_canshu_a = 10.5;
+        //                fushi_canshu_b = -1.584;
+        //            }
+        //            if (tiligaodu >= 1620 && tiligaodu < 1860)
+        //            {
+        //                fushi_canshu_a = 784.8;
+        //                fushi_canshu_b = -3.046;
+        //            }
+        //            if (tiligaodu > 1860)
+        //            {
+        //                fushi_canshu_a = 28.22;
+        //                fushi_canshu_b = -1.784;
+        //            }
+        //            //cz = (40 * Math.Exp(-1.5 * F1) + 40 * Math.Exp(-1.5 * F2) + 40 * Math.Exp(-1.5 * F3) + 40 * Math.Exp(-1.5 * F4)) / 4;
+        //            // cz = 0.3102 * Math.Exp(1.8 * 1.8 * 0.7031 * Dydata_new[n]) + 0.6342;
+        //            cz = ThickOftube * fushi_canshu_a * Math.Exp(fushi_canshu_b * Dydata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.9 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
+        //        }
+        //        else
+        //        {
+        //            double huiguixishu11 = Convert.ToDouble(huiguixishu1);
+        //            double huiguixishu22 = Convert.ToDouble(huiguixishu2);
+
+        //            cz = ThickOftube * huiguixishu11 * Math.Exp(huiguixishu22 * ysdata_new_1[n]) / 100;
+        //            if (cz > ThickOftube)
+        //            {
+        //                cz = ThickOftube * 0.8 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if (cz == 0)
+        //            {
+        //                cz = ThickOftube * 0.2 + 0.5 * rnd.NextDouble();
+        //            }
+        //            if ((final_imagination[0, n] == 0) && (final_imagination[1, n] == 0) && (final_imagination[2, n] == 0) && (final_imagination[3, n] == 0) && (final_imagination[4, n] == 0) && (final_imagination[5, n] == 0) && (final_imagination[6, n] == 0) && (final_imagination[7, n] == 0))
+        //            {
+        //                cz = 0;
+        //            }
+
+        //        }
+        //        gg.DrawLine(Pens.White, x, currentPoint.Y, x + width, currentPoint.Y); //绘制横线  
+        //        gg.DrawLine(Pens.White, currentPoint.X, y, currentPoint.X, y + height); //会制纵线 
+        //        XtextBox.Text = string.Format("{0:0}", cx) + "mm";
+        //        YtextBox.Text = string.Format("{0:0}", cy) + "mm";
+        //        ZtextBox.Text = string.Format("{0:0.00}", cz) + "mm";
+
+        //        ////计算区域面积
+        //        if (cishu == 4)
+        //        {
+        //            double bianchang = Math.Abs(x1 - x2) * lenofpiece / width;  //边长
+        //            double kuandu = Math.Abs(y1 - y2) * widthOfPiece / height;   //宽度
+        //            double area = bianchang * kuandu / 100;    //面积(平方厘米)
+        //            MjtextBox.Text = string.Format("{0:0.0}", area) + "cm²";
+        //            //MjtextBox.Text = Convert .ToString (area);
+        //        }
+        //    }
+        //}
 
         //private void WcomboBox_SelectedIndexChanged(object sender, EventArgs e)
         //{
@@ -5210,18 +5211,18 @@ namespace theHostComputer
                 double mean_1 = 0;
                 double biaozhuncha_sum_1 = 0;
                 double biaozhuncha_1 = 0;
-                double[] ysdata_new_1 = new double[10000];
-                double[] Dydata_new_1 = new double[10000];
+                double[] ysdata_new_1 = new double[100000];
+                double[] Dydata_new_1 = new double[100000];
 
                 double sum_3 = 0;
                 double mean_3 = 0;
                 double biaozhuncha_sum_3 = 0;
                 double biaozhuncha_3 = 0;
-                double[] ysdata_new_3 = new double[10000];
-                double[] Dydata_new_3 = new double[10000];
+                double[] ysdata_new_3 = new double[100000];
+                double[] Dydata_new_3 = new double[100000];
 
-                double[] ysdata_new = new double[10000];
-                double[] Dydata_new = new double[10000];
+                double[] ysdata_new = new double[100000];
+                double[] Dydata_new = new double[100000];
                 for (int j = 0; j < original_num - 1; j++)
                 {
                     sum_1 = sum_1 + ysdata[2, j];
@@ -5392,18 +5393,18 @@ namespace theHostComputer
                 double mean_1 = 0;
                 double biaozhuncha_sum_1 = 0;
                 double biaozhuncha_1 = 0;
-                double[] ysdata_new_1 = new double[10000];
-                double[] Dydata_new_1 = new double[10000];
+                double[] ysdata_new_1 = new double[100000];
+                double[] Dydata_new_1 = new double[100000];
 
                 double sum_3 = 0;
                 double mean_3 = 0;
                 double biaozhuncha_sum_3 = 0;
                 double biaozhuncha_3 = 0;
-                double[] ysdata_new_3 = new double[10000];
-                double[] Dydata_new_3 = new double[10000];
+                double[] ysdata_new_3 = new double[100000];
+                double[] Dydata_new_3 = new double[100000];
 
-                double[] ysdata_new = new double[10000];
-                double[] Dydata_new = new double[10000];
+                double[] ysdata_new = new double[100000];
+                double[] Dydata_new = new double[100000];
                 for (int j = 0; j < original_num - 1; j++)
                 {
                     sum_1 = sum_1 + ysdata[2, j];

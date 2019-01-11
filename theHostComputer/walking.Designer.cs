@@ -315,7 +315,6 @@
             this.tabPage2_2.TabIndex = 1;
             this.tabPage2_2.Text = "检测结果";
             this.tabPage2_2.UseVisualStyleBackColor = true;
-            this.tabPage2_2.Click += new System.EventHandler(this.tabPage2_2_Click);
             // 
             // yuzhi_chanel
             // 
@@ -471,12 +470,13 @@
             this.pic_2.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
                         | System.Windows.Forms.AnchorStyles.Right)));
             this.pic_2.BackColor = System.Drawing.Color.White;
-            this.pic_2.Location = new System.Drawing.Point(110, 200);
+            this.pic_2.Location = new System.Drawing.Point(101, 200);
             this.pic_2.Name = "pic_2";
             this.pic_2.Size = new System.Drawing.Size(648, 169);
             this.pic_2.TabIndex = 3;
             this.pic_2.TabStop = false;
-            this.pic_2.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_2_Paint);
+            //绘画损失初始图
+            //this.pic_2.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_2_Paint);
             this.pic_2.DoubleClick += new System.EventHandler(this.pic_2_DoubleClick);
             this.pic_2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_2_MouseClick);
             this.pic_2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_2_MouseMove);

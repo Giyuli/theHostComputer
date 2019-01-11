@@ -975,7 +975,8 @@
             this.pic.SizeMode = System.Windows.Forms.PictureBoxSizeMode.StretchImage;
             this.pic.TabIndex = 3;
             this.pic.TabStop = false;
-            this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
+            //绘画损失初始图
+            //this.pic.Paint += new System.Windows.Forms.PaintEventHandler(this.pic_Paint);
             this.pic.DoubleClick += new System.EventHandler(this.pic_DoubleClick);
             this.pic.MouseClick += new System.Windows.Forms.MouseEventHandler(this.pic_MouseClick);
             this.pic.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pic_MouseMove);
